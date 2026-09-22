@@ -8,13 +8,20 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 
 from .binary_sensor import BINARY_SENSOR_TYPES
-from .const import DEFAULT_SCAN_INTERVAL, DOMAIN
+from .const import DEFAULT_SCAN_INTERVAL, DOMAIN, get_model_name
 from .coordinator import OpenFirenetCoordinator
 from .sensor import SENSOR_TYPES
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = [Platform.CLIMATE, Platform.SENSOR, Platform.BINARY_SENSOR]
+PLATFORMS = [
+    Platform.CLIMATE,
+    Platform.SENSOR,
+    Platform.BINARY_SENSOR,
+    Platform.SWITCH,
+    Platform.NUMBER,
+    Platform.FAN,
+]
 
 
 @callback
@@ -28,6 +35,12 @@ def _cleanup_orphaned_entities(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """
     valid_unique_ids = {
         f"{entry.entry_id}_climate",
+        f"{entry.entry_id}_switch_heating_schedule",
+        f"{entry.entry_id}_number_setback_temperature",
+        f"{entry.entry_id}_number_multiair_1_area",
+        f"{entry.entry_id}_number_multiair_2_area",
+        f"{entry.entry_id}_fan_multiair_1",
+        f"{entry.entry_id}_fan_multiair_2",
         *(f"{entry.entry_id}_{desc.key}" for desc in BINARY_SENSOR_TYPES),
         *(f"{entry.entry_id}_sensor_{desc.key}" for desc in SENSOR_TYPES),
     }
@@ -78,7 +91,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     device_reg = dr.async_get(hass)
     device = coordinator.data.get("device", {})
     stove = coordinator.data.get("stove", {})
-    model_name = stove.get("model_name") or {10: "INTERNO", 13: "DOMO", 23: "DOMO BACK"}.get(stove.get("model"), f"Model {stove.get('model', 'Unknown')}")
+    model_name = stove.get("model_name") or get_model_name(stove.get("model"))
     device_reg.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, entry.entry_id)},

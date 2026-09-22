@@ -15,7 +15,7 @@ from typing import Any
 
 import aiohttp
 
-from .const import API_CONTROLS, API_STATE
+from .const import API_CONTROLS, API_SCHEDULE, API_STATE
 
 
 class OpenFirenetClient:
@@ -49,6 +49,22 @@ class OpenFirenetClient:
         """POST a partial controls update as JSON to /api/controls."""
         async with self._get_session().post(
             f"{self._base}{API_CONTROLS}",
+            json=payload,
+            headers={"Content-Type": "application/json"},
+            timeout=aiohttp.ClientTimeout(total=10),
+        ) as resp:
+            resp.raise_for_status()
+
+    async def fetch_schedule(self) -> dict[str, Any]:
+        """GET the weekly schedule payload from /api/schedule."""
+        async with self._get_session().get(f"{self._base}{API_SCHEDULE}") as resp:
+            resp.raise_for_status()
+            return await resp.json()
+
+    async def set_schedule(self, payload: dict[str, Any]) -> None:
+        """POST a schedule update as JSON to /api/schedule."""
+        async with self._get_session().post(
+            f"{self._base}{API_SCHEDULE}",
             json=payload,
             headers={"Content-Type": "application/json"},
             timeout=aiohttp.ClientTimeout(total=10),

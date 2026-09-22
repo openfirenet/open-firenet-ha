@@ -13,7 +13,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, get_model_name
 from .coordinator import OpenFirenetCoordinator
 
 
@@ -40,6 +40,17 @@ BINARY_SENSOR_TYPES: tuple[OpenFirenetBinarySensorDescription, ...] = (
         name="Stove Error",
         device_class=BinarySensorDeviceClass.PROBLEM,
         value_fn=lambda data: data.get("stove", {}).get("has_error", False),
+    ),
+    OpenFirenetBinarySensorDescription(
+        key="hopper_lid",
+        name="Pellet Hopper Lid",
+        device_class=BinarySensorDeviceClass.DOOR,
+        icon="mdi:tray-arrow-up",
+        value_fn=lambda data: (
+            data.get("raw_sensors", {}).get("hopperLidClosed") == 0
+            if "hopperLidClosed" in data.get("raw_sensors", {})
+            else bool(data.get("stove", {}).get("state_mask", 0) & 2)
+        ),
     ),
 )
 
@@ -78,7 +89,7 @@ class OpenFirenetBinarySensor(
     def device_info(self) -> dict:
         device = self.coordinator.data.get("device", {})
         stove = self.coordinator.data.get("stove", {})
-        model_name = stove.get("model_name") or {10: "INTERNO", 13: "DOMO", 23: "DOMO BACK"}.get(stove.get("model"), f"Model {stove.get('model', 'Unknown')}")
+        model_name = stove.get("model_name") or get_model_name(stove.get("model"))
         return {
             "identifiers": {(DOMAIN, self._entry.entry_id)},
             "name": device.get("name", "Open-Firenet"),

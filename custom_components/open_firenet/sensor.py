@@ -20,7 +20,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, get_model_name
 from .coordinator import OpenFirenetCoordinator
 
 
@@ -100,7 +100,9 @@ SENSOR_TYPES: tuple[OpenFirenetSensorEntityDescription, ...] = (
         native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
         device_class=SensorDeviceClass.SIGNAL_STRENGTH,
         state_class=SensorStateClass.MEASUREMENT,
-        value_fn=lambda data: data.get("device", {}).get("wifi_rssi"),
+        value_fn=lambda data: data.get("device", {}).get(
+            "rssi", data.get("device", {}).get("wifi_rssi")
+        ),
     ),
     OpenFirenetSensorEntityDescription(
         key="uptime_seconds",
@@ -145,7 +147,7 @@ class OpenFirenetSensor(CoordinatorEntity[OpenFirenetCoordinator], SensorEntity)
     def device_info(self) -> dict:
         device = self.coordinator.data.get("device", {})
         stove = self.coordinator.data.get("stove", {})
-        model_name = stove.get("model_name") or {10: "INTERNO", 13: "DOMO", 23: "DOMO BACK"}.get(stove.get("model"), f"Model {stove.get('model', 'Unknown')}")
+        model_name = stove.get("model_name") or get_model_name(stove.get("model"))
         return {
             "identifiers": {(DOMAIN, self._entry.entry_id)},
             "name": device.get("name", "Open-Firenet"),

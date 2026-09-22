@@ -9,6 +9,30 @@
         }
       }
     },
+    "fan": {
+      "multiair_1": {
+        "default": "mdi:fan"
+      },
+      "multiair_2": {
+        "default": "mdi:fan"
+      }
+    },
+    "switch": {
+      "heating_schedule": {
+        "default": "mdi:calendar-clock"
+      }
+    },
+    "number": {
+      "setback_temperature": {
+        "default": "mdi:thermometer-chevron-down"
+      },
+      "multiair_1_area": {
+        "default": "mdi:fan-chevron-up"
+      },
+      "multiair_2_area": {
+        "default": "mdi:fan-chevron-up"
+      }
+    },
     "binary_sensor": {
       "connected": {
         "default": "mdi:lan-connect",
@@ -30,26 +54,48 @@
           "on": "mdi:alert-circle",
           "off": "mdi:check-circle-outline"
         }
+      },
+      "hopper_lid": {
+        "default": "mdi:tray-arrow-up",
+        "state": {
+          "on": "mdi:tray-arrow-up",
+          "off": "mdi:tray-arrow-down"
+        }
       }
     },
     "sensor": {
-      "operational_state": {
-        "default": "mdi:heating-coil"
+      "room_temperature": {
+        "default": "mdi:thermometer"
       },
-      "sub_state": {
-        "default": "mdi:numeric"
+      "combustion_temperature": {
+        "default": "mdi:thermometer-high"
       },
-      "pellet_consumption": {
+      "board_temperature": {
+        "default": "mdi:chip"
+      },
+      "pellets_total_kg": {
         "default": "mdi:weight-kilogram"
       },
-      "pellet_runtime": {
+      "pellet_hours": {
         "default": "mdi:timer-outline"
       },
-      "service_countdown": {
+      "service_countdown_kg": {
         "default": "mdi:wrench-clock"
       },
-      "flue_fan_speed": {
+      "fan_speed_rpm": {
         "default": "mdi:fan"
+      },
+      "auger_speed_rpm": {
+        "default": "mdi:screw-lag"
+      },
+      "stove_state": {
+        "default": "mdi:heating-coil"
+      },
+      "wifi_rssi": {
+        "default": "mdi:wifi"
+      },
+      "uptime_seconds": {
+        "default": "mdi:clock-outline"
       }
     }
   }

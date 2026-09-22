@@ -32,6 +32,33 @@
       },
       "problem": {
         "name": "Stove Error"
+      },
+      "hopper_lid": {
+        "name": "Pellet Hopper Lid"
+      }
+    },
+    "fan": {
+      "multiair_1": {
+        "name": "MultiAir 1"
+      },
+      "multiair_2": {
+        "name": "MultiAir 2"
+      }
+    },
+    "switch": {
+      "heating_schedule": {
+        "name": "Heating Schedule"
+      }
+    },
+    "number": {
+      "setback_temperature": {
+        "name": "Setback Temperature"
+      },
+      "multiair_1_area": {
+        "name": "MultiAir 1 Convection Trim"
+      },
+      "multiair_2_area": {
+        "name": "MultiAir 2 Convection Trim"
       }
     },
     "sensor": {
@@ -44,28 +71,28 @@
       "board_temperature": {
         "name": "Board Temperature"
       },
-      "operational_state": {
-        "name": "Operational State"
+      "pellets_total_kg": {
+        "name": "Pellets Consumed"
       },
-      "sub_state": {
-        "name": "Sub-State"
+      "pellet_hours": {
+        "name": "Pellet Operating Hours"
       },
-      "pellet_consumption": {
-        "name": "Pellet Consumption"
-      },
-      "pellet_runtime": {
-        "name": "Pellet Runtime"
-      },
-      "service_countdown": {
+      "service_countdown_kg": {
         "name": "Service Countdown"
       },
-      "flue_fan_speed": {
-        "name": "Flue Fan Speed"
+      "fan_speed_rpm": {
+        "name": "Flue Draft Fan Speed"
       },
-      "rssi": {
+      "auger_speed_rpm": {
+        "name": "Pellet Auger Speed"
+      },
+      "stove_state": {
+        "name": "Stove State"
+      },
+      "wifi_rssi": {
         "name": "WiFi Signal Strength"
       },
-      "uptime": {
+      "uptime_seconds": {
         "name": "Uptime"
       }
     }
