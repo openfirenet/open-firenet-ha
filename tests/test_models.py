@@ -12,9 +12,9 @@ from custom_components.open_firenet.const import (
 )
 
 
-def test_primo_is_registered():
-    assert STOVE_MODELS[29] == "PRIMO"
-    assert get_model_name(29) == "PRIMO"
+def test_primo_multiair_is_registered():
+    assert STOVE_MODELS[29] == "PRIMO MULTIAIR"
+    assert get_model_name(29) == "PRIMO MULTIAIR"
 
 
 @pytest.mark.parametrize("model_id", sorted(MULTIAIR_MODELS))

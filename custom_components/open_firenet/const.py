@@ -73,7 +73,7 @@ STOVE_MODELS: dict[int, str] = {
     24: "PK E",
     25: "SUMO MULTIAIR",
     26: "CONNECT",
-    29: "PRIMO",
+    29: "PRIMO MULTIAIR",
 }
 
 MULTIAIR_MODELS: set[int] = {4, 13, 17, 23, 25, 29}

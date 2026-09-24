@@ -58,7 +58,7 @@ Copy the `custom_components/open_firenet/` directory into your Home Assistant `<
 |---|---|---|
 | `climate.open_firenet` | Open-Firenet | Main thermostat: target temperature (14–28°C), HVAC mode (`heat`/`off`), preset mode (`manual`, `auto`, `comfort`), heating power (30–100%) |
 
-### Fan *(MultiAir models only: DOMO, PARO, PRIMO, DOMO BACK, SUMO MULTIAIR, ROCO MULTIAIR)*
+### Fan *(MultiAir models only: DOMO, PARO, PRIMO MULTIAIR, DOMO BACK, SUMO MULTIAIR, ROCO MULTIAIR)*
 | Entity ID | Name | Description |
 |---|---|---|
 | `fan.open_firenet_multiair_1` | MultiAir 1 | Convection fan 1: On/Off, Preset modes (`auto`, `1`..`5`), Speed percentage (20%–100%) |
@@ -109,7 +109,7 @@ Copy the `custom_components/open_firenet/` directory into your Home Assistant `<
 
 Open-Firenet automatically identifies the stove model via mainboard query and displays the commercial model in Home Assistant device information:
 
-- **MultiAir supported models**: DOMO (13), PARO (17), PRIMO (29), DOMO BACK (23), SUMO MULTIAIR (25), ROCO MULTIAIR (4)
+- **MultiAir supported models**: DOMO (13), PARO (17), PRIMO MULTIAIR (29), DOMO BACK (23), SUMO MULTIAIR (25), ROCO MULTIAIR (4)
 - **Natural convection models**: INDUO (1), TOPO (2), ROCO (3), ROCO RAO (5), KAPO (6), MIRO (7), COMO (8), REVO (9), INTERNO (10), FILO (11), SUMO (12), CORSO (14), INDUO II (15), REVIVO (16), LIVO (18), COMO II (19), REVO II (20), COSMO (21), SONO (22), PK E (24), CONNECT (26)
 
 ---
