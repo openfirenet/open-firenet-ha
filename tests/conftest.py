@@ -47,7 +47,7 @@ INITIAL_STATE = {
         "mode": "manual",
         "mode_code": 0,
         "target_temperature": 21.0,
-        "power_percent": 3,
+        "power_percent": 70,
         "heating_times_active": False,
         "setback_temperature": 16.0,
         "convection_fan1_active": True,
@@ -68,6 +68,7 @@ INITIAL_STATE = {
 # camelCase command key -> snake_case key of /api/state "controls"
 COMMAND_TO_STATE_KEY = {
     "on": "on",
+    "power_percent": "power_percent",
     "convectionFan1Active": "convection_fan1_active",
     "convectionFan1Level": "convection_fan1_level",
     "convectionFan2Active": "convection_fan2_active",

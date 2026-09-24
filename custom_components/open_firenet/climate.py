@@ -24,7 +24,7 @@ from .const import (
 )
 from .coordinator import OpenFirenetCoordinator
 
-FAN_MODES = [str(p) for p in range(HEATING_POWER_MIN, HEATING_POWER_MAX + 1, HEATING_POWER_STEP)]
+FAN_MODES = [f"power_{p}" for p in range(HEATING_POWER_MIN, HEATING_POWER_MAX + 1, HEATING_POWER_STEP)]
 PRESET_MODES = list(OPERATING_MODES.values())
 
 
@@ -38,6 +38,7 @@ async def async_setup_entry(
 class OpenFirenetClimate(CoordinatorEntity[OpenFirenetCoordinator], ClimateEntity):
     _attr_has_entity_name = True
     _attr_name = None
+    _attr_translation_key = "open_firenet"
     _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT]
     _attr_preset_modes = PRESET_MODES
@@ -102,7 +103,7 @@ class OpenFirenetClimate(CoordinatorEntity[OpenFirenetCoordinator], ClimateEntit
     @property
     def fan_mode(self) -> str | None:
         power = self._controls.get("power_percent")
-        return str(power) if power is not None else "70"
+        return f"power_{int(power)}" if power is not None else "power_70"
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         await self.coordinator.async_set_controls(on=(hvac_mode == HVACMode.HEAT))
@@ -122,4 +123,4 @@ class OpenFirenetClimate(CoordinatorEntity[OpenFirenetCoordinator], ClimateEntit
         await self.coordinator.async_set_controls(mode=preset_mode)
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
-        await self.coordinator.async_set_controls(power_percent=int(fan_mode))
+        await self.coordinator.async_set_controls(power_percent=int(fan_mode.removeprefix("power_")))

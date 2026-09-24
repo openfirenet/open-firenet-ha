@@ -6,6 +6,34 @@
         "state": {
           "heat": "mdi:fireplace",
           "off": "mdi:fireplace-off"
+        },
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "manual": "mdi:hand-back-left",
+              "auto": "mdi:auto-mode",
+              "comfort": "mdi:sofa"
+            }
+          },
+          "fan_mode": {
+            "state": {
+              "power_30": "mdi:speedometer-slow",
+              "power_35": "mdi:speedometer-slow",
+              "power_40": "mdi:speedometer-slow",
+              "power_45": "mdi:speedometer-slow",
+              "power_50": "mdi:speedometer-medium",
+              "power_55": "mdi:speedometer-medium",
+              "power_60": "mdi:speedometer-medium",
+              "power_65": "mdi:speedometer-medium",
+              "power_70": "mdi:speedometer-medium",
+              "power_75": "mdi:speedometer-medium",
+              "power_80": "mdi:speedometer",
+              "power_85": "mdi:speedometer",
+              "power_90": "mdi:speedometer",
+              "power_95": "mdi:speedometer",
+              "power_100": "mdi:speedometer"
+            }
+          }
         }
       }
     },

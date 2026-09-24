@@ -23,6 +23,39 @@
     }
   },
   "entity": {
+    "climate": {
+      "open_firenet": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "manual": "Manuel",
+              "auto": "Automatique",
+              "comfort": "Confort"
+            }
+          },
+          "fan_mode": {
+            "name": "Puissance de chauffe",
+            "state": {
+              "power_30": "30 %",
+              "power_35": "35 %",
+              "power_40": "40 %",
+              "power_45": "45 %",
+              "power_50": "50 %",
+              "power_55": "55 %",
+              "power_60": "60 %",
+              "power_65": "65 %",
+              "power_70": "70 %",
+              "power_75": "75 %",
+              "power_80": "80 %",
+              "power_85": "85 %",
+              "power_90": "90 %",
+              "power_95": "95 %",
+              "power_100": "100 %"
+            }
+          }
+        }
+      }
+    },
     "binary_sensor": {
       "connected": {
         "name": "Connecté"

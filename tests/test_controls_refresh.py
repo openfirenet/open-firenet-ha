@@ -138,3 +138,20 @@ async def test_optimistic_value_is_visible_before_refresh(hass, bridge, setup_in
     await coordinator.async_set_controls(frostProtectionTemp=9.0)
 
     assert seen[0]["frost_protection_temperature"] == 9.0
+
+
+async def test_climate_heating_power_is_expressed_as_percentage(hass, bridge, setup_integration):
+    entity_id = _entity_id(hass, setup_integration, "climate", "climate")
+    state = hass.states.get(entity_id)
+    assert state.attributes["fan_mode"] == "power_70"
+    assert state.attributes["fan_modes"] == [f"power_{power}" for power in range(30, 101, 5)]
+
+    await hass.services.async_call(
+        "climate",
+        "set_fan_mode",
+        {"entity_id": entity_id, "fan_mode": "power_85"},
+        blocking=True,
+    )
+
+    assert bridge.posts[-1] == {"power_percent": 85}
+    assert hass.states.get(entity_id).attributes["fan_mode"] == "power_85"
