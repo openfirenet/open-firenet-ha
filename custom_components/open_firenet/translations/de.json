@@ -1,4 +1,27 @@
 {
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit Open Firenet verbinden",
+        "data": {
+          "host": "IP-Adresse oder Hostname",
+          "scan_interval": "Abfrageintervall (Sekunden)"
+        },
+        "data_description": {
+          "host": "Beispiel: open-firenet.local oder 192.168.1.93",
+          "scan_interval": "Wie oft die Bridge abgefragt wird, in Sekunden (10–300)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Gerät nicht möglich. Prüfe die IP-Adresse und ob das Gerät online ist.",
+      "invalid_response": "Das Gerät hat geantwortet, sieht aber nicht wie eine Open-Firenet-Bridge aus.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieses Gerät ist bereits konfiguriert."
+    }
+  },
   "entity": {
     "climate": {
       "open_firenet": {
@@ -31,6 +54,91 @@
             }
           }
         }
+      }
+    },
+    "binary_sensor": {
+      "connected": {
+        "name": "Verbunden"
+      },
+      "burning": {
+        "name": "Verbrennung aktiv"
+      },
+      "problem": {
+        "name": "Ofenfehler"
+      },
+      "hopper_lid": {
+        "name": "Pelletbehälter-Deckel"
+      }
+    },
+    "fan": {
+      "multiair_1": {
+        "name": "MultiAir 1"
+      },
+      "multiair_2": {
+        "name": "MultiAir 2"
+      }
+    },
+    "switch": {
+      "heating_schedule": {
+        "name": "Heizzeiten"
+      },
+      "frost_protection": {
+        "name": "Frostschutz"
+      }
+    },
+    "number": {
+      "setback_temperature": {
+        "name": "Absenktemperatur"
+      },
+      "frost_protection_temperature": {
+        "name": "Frostschutztemperatur"
+      },
+      "bake_target_temperature": {
+        "name": "Zieltemperatur Backofen"
+      },
+      "room_temperature_offset": {
+        "name": "Raumtemperatur-Korrektur"
+      },
+      "multiair_1_area": {
+        "name": "MultiAir 1 Konvektionsabgleich"
+      },
+      "multiair_2_area": {
+        "name": "MultiAir 2 Konvektionsabgleich"
+      }
+    },
+    "sensor": {
+      "room_temperature": {
+        "name": "Raumtemperatur"
+      },
+      "combustion_temperature": {
+        "name": "Brennraumtemperatur"
+      },
+      "board_temperature": {
+        "name": "Platinentemperatur"
+      },
+      "pellets_total_kg": {
+        "name": "Pelletverbrauch"
+      },
+      "pellet_hours": {
+        "name": "Pellet-Betriebsstunden"
+      },
+      "service_countdown_kg": {
+        "name": "Wartungszähler"
+      },
+      "fan_speed_rpm": {
+        "name": "Abgasgebläse-Drehzahl"
+      },
+      "auger_speed_rpm": {
+        "name": "Förderschnecken-Drehzahl"
+      },
+      "stove_state": {
+        "name": "Ofenstatus"
+      },
+      "wifi_rssi": {
+        "name": "WLAN-Signalstärke"
+      },
+      "uptime_seconds": {
+        "name": "Betriebszeit"
       }
     }
   }
