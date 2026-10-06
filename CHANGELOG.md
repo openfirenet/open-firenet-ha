@@ -2,6 +2,9 @@
 
 ## Non publié
 
+### Features
+- Italian translation (contributed by @lupin28).
+
 ## v2.4.2 (2026-10-05)
 
 ### Fixes
