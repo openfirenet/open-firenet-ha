@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.5.0 (2026-10-07)
 
 ### Features
 - Italian translation (contributed by @lupin28).
