@@ -1,0 +1,173 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connetti a Open Firenet",
+        "data": {
+          "host": "Indirizzo IP o nome host",
+          "scan_interval": "Intervallo di aggiornamento (secondi)"
+        },
+        "data_description": {
+          "host": "Esempio: open-firenet.local o 192.168.1.93",
+          "scan_interval": "Ogni quanto interrogare il bridge, in secondi (10–300)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile connettersi al dispositivo. Controlla l'indirizzo IP e verifica che il dispositivo sia online.",
+      "invalid_response": "Il dispositivo ha risposto, ma non sembra essere un bridge Open Firenet.",
+      "unknown": "Errore imprevisto."
+    },
+    "abort": {
+      "already_configured": "Questo dispositivo è già configurato."
+    }
+  },
+  "entity": {
+    "climate": {
+      "open_firenet": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "manual": "Manuale",
+              "auto": "Automatico",
+              "comfort": "Comfort"
+            }
+          },
+          "fan_mode": {
+            "name": "Potenza di riscaldamento",
+            "state": {
+              "power_30": "30%",
+              "power_35": "35%",
+              "power_40": "40%",
+              "power_45": "45%",
+              "power_50": "50%",
+              "power_55": "55%",
+              "power_60": "60%",
+              "power_65": "65%",
+              "power_70": "70%",
+              "power_75": "75%",
+              "power_80": "80%",
+              "power_85": "85%",
+              "power_90": "90%",
+              "power_95": "95%",
+              "power_100": "100%"
+            }
+          }
+        }
+      }
+    },
+    "binary_sensor": {
+      "connected": {
+        "name": "Connesso"
+      },
+      "burning": {
+        "name": "Combustione attiva"
+      },
+      "problem": {
+        "name": "Errore della stufa"
+      },
+      "hopper_lid": {
+        "name": "Coperchio del serbatoio pellet"
+      }
+    },
+    "fan": {
+      "multiair_1": {
+        "name": "MultiAir 1"
+      },
+      "multiair_2": {
+        "name": "MultiAir 2"
+      }
+    },
+    "switch": {
+      "heating_schedule": {
+        "name": "Programmazione del riscaldamento"
+      },
+      "frost_protection": {
+        "name": "Protezione antigelo"
+      }
+    },
+    "number": {
+      "setback_temperature": {
+        "name": "Temperatura ridotta"
+      },
+      "frost_protection_temperature": {
+        "name": "Temperatura antigelo"
+      },
+      "bake_target_temperature": {
+        "name": "Temperatura impostata del forno"
+      },
+      "room_temperature_offset": {
+        "name": "Correzione della temperatura ambiente"
+      },
+      "multiair_1_area": {
+        "name": "Regolazione della convezione MultiAir 1"
+      },
+      "multiair_2_area": {
+        "name": "Regolazione della convezione MultiAir 2"
+      }
+    },
+    "sensor": {
+      "room_temperature": {
+        "name": "Temperatura ambiente"
+      },
+      "combustion_temperature": {
+        "name": "Temperatura della camera di combustione"
+      },
+      "board_temperature": {
+        "name": "Temperatura della scheda"
+      },
+      "pellets_total_kg": {
+        "name": "Pellet consumato"
+      },
+      "pellet_hours": {
+        "name": "Ore di funzionamento a pellet"
+      },
+      "service_countdown_kg": {
+        "name": "Contatore pellet prima della manutenzione"
+      },
+      "fan_speed_rpm": {
+        "name": "Velocità dell'estrattore fumi"
+      },
+      "auger_speed_rpm": {
+        "name": "Velocità della coclea pellet"
+      },
+      "stove_state": {
+        "name": "Stato della stufa"
+      },
+      "wifi_rssi": {
+        "name": "Intensità del segnale Wi-Fi"
+      },
+      "uptime_seconds": {
+        "name": "Tempo di attività"
+      },
+      "air_flaps_percent": {
+        "name": "Serrande dell'aria"
+      },
+      "air_flaps_target_percent": {
+        "name": "Posizione impostata delle serrande dell'aria"
+      },
+      "error_code": {
+        "name": "Codice di errore"
+      },
+      "error_sub": {
+        "name": "Sottocodice di errore"
+      },
+      "warning_code": {
+        "name": "Codice di avviso"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opzioni",
+        "data": {
+          "external_temperature_sensor": "Sensore di temperatura esterno"
+        },
+        "data_description": {
+          "external_temperature_sensor": "Facoltativo. Un sensore di temperatura di Home Assistant da usare per visualizzare la temperatura attuale dell'entità climate al posto di quella rilevata dal sensore della stufa (utile se non hai un sensore ambiente RIKA). Serve solo per la visualizzazione: la stufa continua a regolare il riscaldamento in base al proprio sensore."
+        }
+      }
+    }
+  }
+}
