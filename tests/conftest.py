@@ -84,6 +84,12 @@ COMMAND_TO_STATE_KEY = {
 }
 
 
+SCHEDULE_KEYS = [f"heatTime{day}{slot}" for day in ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun") for slot in (1, 2)]
+
+# controls_pos of a stove with a schedule: Monday 07:00-12:30 and 14:30-21:01, Tuesday slot 1 06:00-23:30, rest off.
+CONTROLS_POS_WITH_SCHEDULE = [0, 0, 2, 70, 200, 180, 0, 7001230, 14302101, 6002330] + [0] * 11 + [1, 160] + [0] * 9
+
+
 class FakeBridge:
     def __init__(self) -> None:
         self.state = copy.deepcopy(INITIAL_STATE)
@@ -119,6 +125,10 @@ class FakeBridge:
         payload = await request.json()
         self.posts.append(payload)
         for key, value in payload.items():
+            if key.startswith("heatTime") and key in SCHEDULE_KEYS:
+                # schedule slots live in controls_pos, records 7..20
+                self.state["controls_pos"][7 + SCHEDULE_KEYS.index(key)] = value
+                continue
             state_key = COMMAND_TO_STATE_KEY.get(key)
             if state_key is None:
                 continue

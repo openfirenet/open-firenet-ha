@@ -69,6 +69,9 @@
       },
       "hopper_lid": {
         "name": "Pelletbehälter-Deckel"
+      },
+      "schedule_pending": {
+        "name": "Heizzeiten-Änderungen ausstehend"
       }
     },
     "fan": {
@@ -156,6 +159,103 @@
       "warning_code": {
         "name": "Warncode"
       }
+    },
+    "time": {
+      "schedule_mon_1_start": {
+        "name": "Montag Zeitfenster 1 Beginn"
+      },
+      "schedule_mon_1_end": {
+        "name": "Montag Zeitfenster 1 Ende"
+      },
+      "schedule_mon_2_start": {
+        "name": "Montag Zeitfenster 2 Beginn"
+      },
+      "schedule_mon_2_end": {
+        "name": "Montag Zeitfenster 2 Ende"
+      },
+      "schedule_tue_1_start": {
+        "name": "Dienstag Zeitfenster 1 Beginn"
+      },
+      "schedule_tue_1_end": {
+        "name": "Dienstag Zeitfenster 1 Ende"
+      },
+      "schedule_tue_2_start": {
+        "name": "Dienstag Zeitfenster 2 Beginn"
+      },
+      "schedule_tue_2_end": {
+        "name": "Dienstag Zeitfenster 2 Ende"
+      },
+      "schedule_wed_1_start": {
+        "name": "Mittwoch Zeitfenster 1 Beginn"
+      },
+      "schedule_wed_1_end": {
+        "name": "Mittwoch Zeitfenster 1 Ende"
+      },
+      "schedule_wed_2_start": {
+        "name": "Mittwoch Zeitfenster 2 Beginn"
+      },
+      "schedule_wed_2_end": {
+        "name": "Mittwoch Zeitfenster 2 Ende"
+      },
+      "schedule_thu_1_start": {
+        "name": "Donnerstag Zeitfenster 1 Beginn"
+      },
+      "schedule_thu_1_end": {
+        "name": "Donnerstag Zeitfenster 1 Ende"
+      },
+      "schedule_thu_2_start": {
+        "name": "Donnerstag Zeitfenster 2 Beginn"
+      },
+      "schedule_thu_2_end": {
+        "name": "Donnerstag Zeitfenster 2 Ende"
+      },
+      "schedule_fri_1_start": {
+        "name": "Freitag Zeitfenster 1 Beginn"
+      },
+      "schedule_fri_1_end": {
+        "name": "Freitag Zeitfenster 1 Ende"
+      },
+      "schedule_fri_2_start": {
+        "name": "Freitag Zeitfenster 2 Beginn"
+      },
+      "schedule_fri_2_end": {
+        "name": "Freitag Zeitfenster 2 Ende"
+      },
+      "schedule_sat_1_start": {
+        "name": "Samstag Zeitfenster 1 Beginn"
+      },
+      "schedule_sat_1_end": {
+        "name": "Samstag Zeitfenster 1 Ende"
+      },
+      "schedule_sat_2_start": {
+        "name": "Samstag Zeitfenster 2 Beginn"
+      },
+      "schedule_sat_2_end": {
+        "name": "Samstag Zeitfenster 2 Ende"
+      },
+      "schedule_sun_1_start": {
+        "name": "Sonntag Zeitfenster 1 Beginn"
+      },
+      "schedule_sun_1_end": {
+        "name": "Sonntag Zeitfenster 1 Ende"
+      },
+      "schedule_sun_2_start": {
+        "name": "Sonntag Zeitfenster 2 Beginn"
+      },
+      "schedule_sun_2_end": {
+        "name": "Sonntag Zeitfenster 2 Ende"
+      }
+    },
+    "button": {
+      "schedule_copy": {
+        "name": "Zeitplan zum Ofen kopieren"
+      },
+      "schedule_send": {
+        "name": "Heizzeiten an den Ofen senden"
+      },
+      "schedule_discard": {
+        "name": "Änderungen der Heizzeiten verwerfen"
+      }
     }
   },
   "options": {
@@ -163,10 +263,12 @@
       "init": {
         "title": "Optionen",
         "data": {
-          "external_temperature_sensor": "Externer Temperatursensor"
+          "external_temperature_sensor": "Externer Temperatursensor",
+          "schedule_entity": "Zeitplan, der zum Ofen kopiert wird"
         },
         "data_description": {
-          "external_temperature_sensor": "Optional. Ein Home-Assistant-Temperatursensor, der als aktuelle Temperatur der Klima-Entität anstelle des Ofensensors angezeigt wird (nützlich ohne RIKA-Raumsensor). Nur Anzeige: Der Ofen regelt weiterhin über seinen eigenen Sensor."
+          "external_temperature_sensor": "Optional. Ein Home-Assistant-Temperatursensor, der als aktuelle Temperatur der Klima-Entität anstelle des Ofensensors angezeigt wird (nützlich ohne RIKA-Raumsensor). Nur Anzeige: Der Ofen regelt weiterhin über seinen eigenen Sensor.",
+          "schedule_entity": "Optional. Ein Home-Assistant-Zeitplan (Einstellungen, Geräte & Dienste, Helfer, Zeitplan), als Wochenraster gezeichnet. Die Schaltfläche „Zeitplan zum Ofen kopieren“ sendet ihn dann an den Ofen. Höchstens zwei Zeitfenster pro Tag."
         }
       }
     }
@@ -180,6 +282,18 @@
     },
     "command_failed": {
       "message": "Der Befehl hat den Stick unter {host} nicht erreicht: {error}"
+    },
+    "schedule_end_before_start": {
+      "message": "Zeitfenster {slot}: Das Ende ({end}) liegt vor dem Beginn ({start}). Es wurde nichts an den Ofen gesendet."
+    },
+    "schedule_not_chosen": {
+      "message": "Es ist kein Zeitplan ausgewählt. Legen Sie einen an (Einstellungen, Geräte & Dienste, Helfer, Zeitplan) und wählen Sie ihn dann in den Optionen der Open-Firenet-Integration aus."
+    },
+    "schedule_not_found": {
+      "message": "Der Zeitplan {entity} kann nicht gelesen werden. Prüfen Sie, ob er noch existiert, und wählen Sie ihn dann erneut in den Optionen der Integration aus."
+    },
+    "schedule_too_many_slots": {
+      "message": "Der Ofen akzeptiert zwei Zeitfenster pro Tag, dieser Zeitplan hat für {weekday} {count}. Es wurde nichts an den Ofen gesendet."
     }
   }
 }

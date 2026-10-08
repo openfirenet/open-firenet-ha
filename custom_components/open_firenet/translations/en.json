@@ -69,6 +69,9 @@
       },
       "hopper_lid": {
         "name": "Pellet Hopper Lid"
+      },
+      "schedule_pending": {
+        "name": "Schedule changes pending"
       }
     },
     "fan": {
@@ -156,6 +159,103 @@
       "warning_code": {
         "name": "Warning Code"
       }
+    },
+    "time": {
+      "schedule_mon_1_start": {
+        "name": "Monday slot 1 start"
+      },
+      "schedule_mon_1_end": {
+        "name": "Monday slot 1 end"
+      },
+      "schedule_mon_2_start": {
+        "name": "Monday slot 2 start"
+      },
+      "schedule_mon_2_end": {
+        "name": "Monday slot 2 end"
+      },
+      "schedule_tue_1_start": {
+        "name": "Tuesday slot 1 start"
+      },
+      "schedule_tue_1_end": {
+        "name": "Tuesday slot 1 end"
+      },
+      "schedule_tue_2_start": {
+        "name": "Tuesday slot 2 start"
+      },
+      "schedule_tue_2_end": {
+        "name": "Tuesday slot 2 end"
+      },
+      "schedule_wed_1_start": {
+        "name": "Wednesday slot 1 start"
+      },
+      "schedule_wed_1_end": {
+        "name": "Wednesday slot 1 end"
+      },
+      "schedule_wed_2_start": {
+        "name": "Wednesday slot 2 start"
+      },
+      "schedule_wed_2_end": {
+        "name": "Wednesday slot 2 end"
+      },
+      "schedule_thu_1_start": {
+        "name": "Thursday slot 1 start"
+      },
+      "schedule_thu_1_end": {
+        "name": "Thursday slot 1 end"
+      },
+      "schedule_thu_2_start": {
+        "name": "Thursday slot 2 start"
+      },
+      "schedule_thu_2_end": {
+        "name": "Thursday slot 2 end"
+      },
+      "schedule_fri_1_start": {
+        "name": "Friday slot 1 start"
+      },
+      "schedule_fri_1_end": {
+        "name": "Friday slot 1 end"
+      },
+      "schedule_fri_2_start": {
+        "name": "Friday slot 2 start"
+      },
+      "schedule_fri_2_end": {
+        "name": "Friday slot 2 end"
+      },
+      "schedule_sat_1_start": {
+        "name": "Saturday slot 1 start"
+      },
+      "schedule_sat_1_end": {
+        "name": "Saturday slot 1 end"
+      },
+      "schedule_sat_2_start": {
+        "name": "Saturday slot 2 start"
+      },
+      "schedule_sat_2_end": {
+        "name": "Saturday slot 2 end"
+      },
+      "schedule_sun_1_start": {
+        "name": "Sunday slot 1 start"
+      },
+      "schedule_sun_1_end": {
+        "name": "Sunday slot 1 end"
+      },
+      "schedule_sun_2_start": {
+        "name": "Sunday slot 2 start"
+      },
+      "schedule_sun_2_end": {
+        "name": "Sunday slot 2 end"
+      }
+    },
+    "button": {
+      "schedule_copy": {
+        "name": "Copy schedule to the stove"
+      },
+      "schedule_send": {
+        "name": "Send schedule to the stove"
+      },
+      "schedule_discard": {
+        "name": "Discard schedule changes"
+      }
     }
   },
   "options": {
@@ -163,10 +263,12 @@
       "init": {
         "title": "Options",
         "data": {
-          "external_temperature_sensor": "External temperature sensor"
+          "external_temperature_sensor": "External temperature sensor",
+          "schedule_entity": "Schedule to copy to the stove"
         },
         "data_description": {
-          "external_temperature_sensor": "Optional. A Home Assistant temperature sensor shown as the climate entity's current temperature instead of the stove's own sensor (useful without a RIKA room sensor). Display only: the stove keeps regulating on its own sensor."
+          "external_temperature_sensor": "Optional. A Home Assistant temperature sensor shown as the climate entity's current temperature instead of the stove's own sensor (useful without a RIKA room sensor). Display only: the stove keeps regulating on its own sensor.",
+          "schedule_entity": "Optional. A Home Assistant schedule (Settings, Devices & services, Helpers, Schedule) drawn as a weekly grid. The button \"Copy schedule to the stove\" then sends it to the stove. Two time ranges per day at most."
         }
       }
     }
@@ -180,6 +282,18 @@
     },
     "command_failed": {
       "message": "The command did not reach the bridge at {host}: {error}"
+    },
+    "schedule_end_before_start": {
+      "message": "Slot {slot}: the end ({end}) is before the start ({start}). Nothing was sent to the stove."
+    },
+    "schedule_not_chosen": {
+      "message": "No schedule is chosen. Create one (Settings, Devices & services, Helpers, Schedule), then choose it in the options of the Open Firenet integration."
+    },
+    "schedule_not_found": {
+      "message": "The schedule {entity} cannot be read. Check that it still exists, then choose it again in the options of the integration."
+    },
+    "schedule_too_many_slots": {
+      "message": "The stove takes two time ranges per day, and {weekday} has {count} in this schedule. Nothing was sent to the stove."
     }
   }
 }

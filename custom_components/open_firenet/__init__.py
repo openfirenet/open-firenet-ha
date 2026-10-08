@@ -21,6 +21,8 @@ PLATFORMS = [
     Platform.SWITCH,
     Platform.NUMBER,
     Platform.FAN,
+    Platform.TIME,
+    Platform.BUTTON,
 ]
 
 

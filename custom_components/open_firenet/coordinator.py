@@ -7,11 +7,22 @@ from datetime import timedelta
 
 import aiohttp
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import HomeAssistantError
+from datetime import time
+
+from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import BridgeRefusedName, OpenFirenetClient, StoveNotReady
 from .const import DOMAIN
+from .schedule import (
+    SLOT_COUNT,
+    TooManySlots,
+    command_key,
+    decode_slot,
+    encode_slot,
+    slots_from_ha_schedule,
+    slots_from_state,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -41,6 +52,8 @@ class OpenFirenetCoordinator(DataUpdateCoordinator):
             name=DOMAIN,
             update_interval=timedelta(seconds=scan_interval),
         )
+        # Schedule times changed in Home Assistant and not sent to the stove yet: (slot index, "start" | "end") -> time.
+        self._schedule_pending: dict[tuple[int, str], time] = {}
 
     async def _async_update_data(self) -> dict:
         try:
@@ -85,3 +98,89 @@ class OpenFirenetCoordinator(DataUpdateCoordinator):
                 current_controls[_to_snake(key)] = value
             self.async_set_updated_data({**self.data, "controls": current_controls})
         await self.async_refresh()
+
+    # --- heating schedule (see schedule.py) ---------------------------------------------------------------------
+
+    @property
+    def schedule_has_pending(self) -> bool:
+        return bool(self._schedule_pending)
+
+    def schedule_time(self, index: int, edge: str) -> time | None:
+        """Start or end of a slot: the pending change if there is one, else the stove's value."""
+        pending = self._schedule_pending.get((index, edge))
+        if pending is not None:
+            return pending
+        slots = slots_from_state(self.data)
+        decoded = decode_slot(slots[index]) if slots else None
+        if decoded is None:
+            return None
+        return decoded[0] if edge == "start" else decoded[1]
+
+    def schedule_set_pending(self, index: int, edge: str, value: time) -> None:
+        """Keep a changed time; nothing is sent to the stove before schedule_send()."""
+        self._schedule_pending[(index, edge)] = value.replace(second=0, microsecond=0)
+        self.async_update_listeners()
+
+    def schedule_discard(self) -> None:
+        self._schedule_pending.clear()
+        self.async_update_listeners()
+
+    async def schedule_send(self) -> None:
+        """Send every slot that has a pending change, in one command."""
+        slots = slots_from_state(self.data)
+        if slots is None:
+            raise HomeAssistantError(translation_domain=DOMAIN, translation_key="stove_not_ready")
+        command: dict[str, int] = {}
+        for index in sorted({i for i, _ in self._schedule_pending}):
+            start, end = self.schedule_time(index, "start"), self.schedule_time(index, "end")
+            if start is None or end is None:
+                raise HomeAssistantError(translation_domain=DOMAIN, translation_key="stove_not_ready")
+            try:
+                command[command_key(index)] = encode_slot(start, end)
+            except ValueError as err:
+                raise ServiceValidationError(
+                    translation_domain=DOMAIN,
+                    translation_key="schedule_end_before_start",
+                    translation_placeholders={
+                        "start": start.strftime("%H:%M"),
+                        "end": end.strftime("%H:%M"),
+                        "slot": command_key(index).removeprefix("heatTime"),
+                    },
+                ) from err
+        if not command:
+            return
+        await self.async_set_controls(**command)
+        self._schedule_pending.clear()
+        self.async_update_listeners()
+
+    async def schedule_copy_from(self, schedule_entity: str | None) -> None:
+        """Send the weekly plan of a Home Assistant schedule to the stove: all 14 slots, in one command."""
+        if not schedule_entity:
+            raise ServiceValidationError(translation_domain=DOMAIN, translation_key="schedule_not_chosen")
+        if self.hass.states.get(schedule_entity) is None or not self.hass.services.has_service("schedule", "get_schedule"):
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="schedule_not_found",
+                translation_placeholders={"entity": schedule_entity},
+            )
+        response = await self.hass.services.async_call(
+            "schedule", "get_schedule", {"entity_id": schedule_entity}, blocking=True, return_response=True
+        )
+        plan = (response or {}).get(schedule_entity)
+        if not isinstance(plan, dict):
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="schedule_not_found",
+                translation_placeholders={"entity": schedule_entity},
+            )
+        try:
+            slots = slots_from_ha_schedule(plan)
+        except TooManySlots as err:
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="schedule_too_many_slots",
+                translation_placeholders={"weekday": err.weekday, "count": str(err.count)},
+            ) from err
+        await self.async_set_controls(**{command_key(i): slots[i] for i in range(SLOT_COUNT)})
+        self._schedule_pending.clear()
+        self.async_update_listeners()
