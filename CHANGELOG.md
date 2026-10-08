@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.6.0 (2026-10-08)
 
 ### Features
 - Heating schedule: set the stove's weekly schedule from Home Assistant. Draw it as a Home Assistant schedule (Settings, Devices & services, Helpers, Schedule: a weekly grid), choose that schedule in the options of the integration, then press "Copy schedule to the stove" on the device page. The stove takes two time ranges per day; a day with more is refused with a message, and nothing is sent. (#31)
