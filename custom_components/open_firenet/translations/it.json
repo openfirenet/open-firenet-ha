@@ -16,7 +16,8 @@
     "error": {
       "cannot_connect": "Impossibile connettersi al dispositivo. Controlla l'indirizzo IP e verifica che il dispositivo sia online.",
       "invalid_response": "Il dispositivo ha risposto, ma non sembra essere un bridge Open Firenet.",
-      "unknown": "Errore imprevisto."
+      "unknown": "Errore imprevisto.",
+      "name_refused": "Il bridge non risponde con questo nome. Inserisci il suo indirizzo IP, oppure aggiungi questo nome nella pagina del bridge (scheda Bridge, sezione Accesso)."
     },
     "abort": {
       "already_configured": "Questo dispositivo è già configurato."
@@ -168,6 +169,17 @@
           "external_temperature_sensor": "Facoltativo. Un sensore di temperatura di Home Assistant da usare per visualizzare la temperatura attuale dell'entità climate al posto di quella rilevata dal sensore della stufa (utile se non hai un sensore ambiente RIKA). Serve solo per la visualizzazione: la stufa continua a regolare il riscaldamento in base al proprio sensore."
         }
       }
+    }
+  },
+  "exceptions": {
+    "stove_not_ready": {
+      "message": "La stufa non è ancora pronta: il bridge è appena stato avviato o non è collegato alla stufa. Non è stato inviato nulla; riprova tra qualche secondo."
+    },
+    "name_refused": {
+      "message": "Il bridge non risponde con il nome {host}. Apri la sua pagina con l'indirizzo IP (http://{ip}) e aggiungi questo nome nella scheda Bridge, sezione Accesso, oppure configura di nuovo l'integrazione con l'indirizzo IP."
+    },
+    "command_failed": {
+      "message": "Il comando non ha raggiunto il bridge all'indirizzo {host}: {error}"
     }
   }
 }

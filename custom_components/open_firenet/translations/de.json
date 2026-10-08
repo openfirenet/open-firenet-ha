@@ -16,7 +16,8 @@
     "error": {
       "cannot_connect": "Verbindung zum Gerät nicht möglich. Prüfe die IP-Adresse und ob das Gerät online ist.",
       "invalid_response": "Das Gerät hat geantwortet, sieht aber nicht wie eine Open Firenet Bridge aus.",
-      "unknown": "Unerwarteter Fehler."
+      "unknown": "Unerwarteter Fehler.",
+      "name_refused": "Der Stick antwortet nicht unter diesem Namen. Geben Sie seine IP-Adresse ein oder tragen Sie diesen Namen auf der Seite des Sticks ein (Tab Stick, Abschnitt Zugriff)."
     },
     "abort": {
       "already_configured": "Dieses Gerät ist bereits konfiguriert."
@@ -168,6 +169,17 @@
           "external_temperature_sensor": "Optional. Ein Home-Assistant-Temperatursensor, der als aktuelle Temperatur der Klima-Entität anstelle des Ofensensors angezeigt wird (nützlich ohne RIKA-Raumsensor). Nur Anzeige: Der Ofen regelt weiterhin über seinen eigenen Sensor."
         }
       }
+    }
+  },
+  "exceptions": {
+    "stove_not_ready": {
+      "message": "Der Ofen ist noch nicht bereit: Der Stick wurde gerade gestartet oder ist nicht mit dem Ofen verbunden. Es wurde nichts gesendet; versuchen Sie es in einigen Sekunden erneut."
+    },
+    "name_refused": {
+      "message": "Der Stick antwortet nicht unter dem Namen {host}. Öffnen Sie seine Seite über die IP-Adresse (http://{ip}) und tragen Sie diesen Namen im Tab Stick, Abschnitt Zugriff, ein, oder richten Sie die Integration mit der IP-Adresse neu ein."
+    },
+    "command_failed": {
+      "message": "Der Befehl hat den Stick unter {host} nicht erreicht: {error}"
     }
   }
 }

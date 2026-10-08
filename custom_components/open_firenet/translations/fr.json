@@ -16,7 +16,8 @@
     "error": {
       "cannot_connect": "Impossible de se connecter à l'appareil. Vérifiez l'adresse IP et que l'appareil est allumé.",
       "invalid_response": "L'appareil a répondu mais ne semble pas être un pont Open Firenet.",
-      "unknown": "Erreur inattendue."
+      "unknown": "Erreur inattendue.",
+      "name_refused": "La clé ne répond pas sous ce nom. Saisissez son adresse IP, ou ajoutez ce nom sur la page de la clé (onglet Clé, section Accès)."
     },
     "abort": {
       "already_configured": "Cet appareil est déjà configuré."
@@ -168,6 +169,17 @@
           "external_temperature_sensor": "Facultatif. Une sonde de température Home Assistant affichée comme température actuelle de l'entité climat, à la place de la sonde du poêle (utile sans sonde d'ambiance RIKA). Affichage uniquement : le poêle continue de réguler sur sa propre sonde."
         }
       }
+    }
+  },
+  "exceptions": {
+    "stove_not_ready": {
+      "message": "Le poêle n'est pas encore prêt : la clé vient de démarrer ou n'est pas reliée au poêle. Rien n'a été envoyé ; réessayez dans quelques secondes."
+    },
+    "name_refused": {
+      "message": "La clé ne répond pas sous le nom {host}. Ouvrez sa page par son adresse IP (http://{ip}) et ajoutez ce nom dans l'onglet Clé, section Accès, ou reconfigurez l'intégration avec l'adresse IP."
+    },
+    "command_failed": {
+      "message": "La commande n'a pas atteint la clé à l'adresse {host} : {error}"
     }
   }
 }
