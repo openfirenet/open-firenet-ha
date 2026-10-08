@@ -10,7 +10,7 @@ from homeassistant.const import CONF_HOST, CONF_SCAN_INTERVAL
 from homeassistant.core import callback
 from homeassistant.helpers import selector
 
-from .api import OpenFirenetClient
+from .api import BridgeRefusedName, OpenFirenetClient
 from .const import CONF_EXTERNAL_TEMP_SENSOR, DEFAULT_SCAN_INTERVAL, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -43,6 +43,8 @@ class OpenFirenetConfigFlow(ConfigFlow, domain=DOMAIN):
                 async with asyncio.timeout(8):
                     if not await client.async_validate():
                         errors["base"] = "invalid_response"
+            except BridgeRefusedName:
+                errors["base"] = "name_refused"
             except asyncio.TimeoutError:
                 errors["base"] = "cannot_connect"
             except aiohttp.ClientError:

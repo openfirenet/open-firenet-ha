@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+### Changes
+- Ready for bridge firmware 4.0. A command sent while the stove is not ready yet (in the seconds after the bridge starts) is sent again once, and if it still cannot go through you get a clear message instead of a raw error. If the bridge refuses the name it is called by, the message says what to do and gives its IP address, when adding the integration as well as later. (openfirenet/open-firenet#77)
+
 ## v2.5.0 (2026-10-07)
 
 ### Features

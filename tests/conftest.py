@@ -90,15 +90,32 @@ class FakeBridge:
         self.posts: list[dict] = []
         self.gets = 0
         self.fail_posts = False
+        self.refuse_name = False  # bridge firmware 4.0: 403 when called under a name it does not know
+        self.not_ready_posts = 0  # bridge firmware 4.0: number of POSTs answered 503 "stove_not_ready"
         self.max_fan_level = 5  # firmware-side clamp, lets tests prove the device wins
 
+    def _refusal(self) -> web.Response:
+        return web.json_response(
+            {"ok": False, "refused": "host", "host": "stove.example.org", "ip": "192.168.1.93", "error": "refused"},
+            status=403,
+        )
+
     async def _get_state(self, request: web.Request) -> web.Response:
+        if self.refuse_name:
+            return self._refusal()
         self.gets += 1
         return web.json_response(self.state)
 
     async def _post_controls(self, request: web.Request) -> web.Response:
+        if self.refuse_name:
+            return self._refusal()
         if self.fail_posts:
             return web.Response(status=500)
+        if self.not_ready_posts > 0:
+            self.not_ready_posts -= 1
+            return web.json_response(
+                {"ok": False, "error": "stove_not_ready", "message": "not ready"}, status=503, headers={"Retry-After": "0"}
+            )
         payload = await request.json()
         self.posts.append(payload)
         for key, value in payload.items():

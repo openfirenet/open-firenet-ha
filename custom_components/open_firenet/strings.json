@@ -16,7 +16,8 @@
     "error": {
       "cannot_connect": "Cannot connect to the device. Check the IP address and that the device is online.",
       "invalid_response": "Device responded but does not look like an Open Firenet bridge.",
-      "unknown": "Unexpected error."
+      "unknown": "Unexpected error.",
+      "name_refused": "The bridge does not answer under this name. Enter its IP address, or add this name on the bridge's page (Bridge tab, section Access)."
     },
     "abort": {
       "already_configured": "This device is already configured."
@@ -168,6 +169,17 @@
           "external_temperature_sensor": "Optional. A Home Assistant temperature sensor shown as the climate entity's current temperature instead of the stove's own sensor (useful without a RIKA room sensor). Display only: the stove keeps regulating on its own sensor."
         }
       }
+    }
+  },
+  "exceptions": {
+    "stove_not_ready": {
+      "message": "The stove is not ready yet: the bridge has just started or is not linked to the stove. Nothing was sent; try again in a few seconds."
+    },
+    "name_refused": {
+      "message": "The bridge does not answer under the name {host}. Open its page by its IP address (http://{ip}) and add this name in the Bridge tab, section Access, or set up the integration again with the IP address."
+    },
+    "command_failed": {
+      "message": "The command did not reach the bridge at {host}: {error}"
     }
   }
 }
