@@ -69,6 +69,9 @@
       },
       "hopper_lid": {
         "name": "Couvercle du réservoir"
+      },
+      "schedule_pending": {
+        "name": "Modifications des plages en attente"
       }
     },
     "fan": {
@@ -156,6 +159,103 @@
       "warning_code": {
         "name": "Code d'avertissement"
       }
+    },
+    "time": {
+      "schedule_mon_1_start": {
+        "name": "Lundi plage 1 début"
+      },
+      "schedule_mon_1_end": {
+        "name": "Lundi plage 1 fin"
+      },
+      "schedule_mon_2_start": {
+        "name": "Lundi plage 2 début"
+      },
+      "schedule_mon_2_end": {
+        "name": "Lundi plage 2 fin"
+      },
+      "schedule_tue_1_start": {
+        "name": "Mardi plage 1 début"
+      },
+      "schedule_tue_1_end": {
+        "name": "Mardi plage 1 fin"
+      },
+      "schedule_tue_2_start": {
+        "name": "Mardi plage 2 début"
+      },
+      "schedule_tue_2_end": {
+        "name": "Mardi plage 2 fin"
+      },
+      "schedule_wed_1_start": {
+        "name": "Mercredi plage 1 début"
+      },
+      "schedule_wed_1_end": {
+        "name": "Mercredi plage 1 fin"
+      },
+      "schedule_wed_2_start": {
+        "name": "Mercredi plage 2 début"
+      },
+      "schedule_wed_2_end": {
+        "name": "Mercredi plage 2 fin"
+      },
+      "schedule_thu_1_start": {
+        "name": "Jeudi plage 1 début"
+      },
+      "schedule_thu_1_end": {
+        "name": "Jeudi plage 1 fin"
+      },
+      "schedule_thu_2_start": {
+        "name": "Jeudi plage 2 début"
+      },
+      "schedule_thu_2_end": {
+        "name": "Jeudi plage 2 fin"
+      },
+      "schedule_fri_1_start": {
+        "name": "Vendredi plage 1 début"
+      },
+      "schedule_fri_1_end": {
+        "name": "Vendredi plage 1 fin"
+      },
+      "schedule_fri_2_start": {
+        "name": "Vendredi plage 2 début"
+      },
+      "schedule_fri_2_end": {
+        "name": "Vendredi plage 2 fin"
+      },
+      "schedule_sat_1_start": {
+        "name": "Samedi plage 1 début"
+      },
+      "schedule_sat_1_end": {
+        "name": "Samedi plage 1 fin"
+      },
+      "schedule_sat_2_start": {
+        "name": "Samedi plage 2 début"
+      },
+      "schedule_sat_2_end": {
+        "name": "Samedi plage 2 fin"
+      },
+      "schedule_sun_1_start": {
+        "name": "Dimanche plage 1 début"
+      },
+      "schedule_sun_1_end": {
+        "name": "Dimanche plage 1 fin"
+      },
+      "schedule_sun_2_start": {
+        "name": "Dimanche plage 2 début"
+      },
+      "schedule_sun_2_end": {
+        "name": "Dimanche plage 2 fin"
+      }
+    },
+    "button": {
+      "schedule_copy": {
+        "name": "Copier le planning vers le poêle"
+      },
+      "schedule_send": {
+        "name": "Envoyer les plages au poêle"
+      },
+      "schedule_discard": {
+        "name": "Annuler les modifications des plages"
+      }
     }
   },
   "options": {
@@ -163,10 +263,12 @@
       "init": {
         "title": "Options",
         "data": {
-          "external_temperature_sensor": "Sonde de température externe"
+          "external_temperature_sensor": "Sonde de température externe",
+          "schedule_entity": "Planning à copier vers le poêle"
         },
         "data_description": {
-          "external_temperature_sensor": "Facultatif. Une sonde de température Home Assistant affichée comme température actuelle de l'entité climat, à la place de la sonde du poêle (utile sans sonde d'ambiance RIKA). Affichage uniquement : le poêle continue de réguler sur sa propre sonde."
+          "external_temperature_sensor": "Facultatif. Une sonde de température Home Assistant affichée comme température actuelle de l'entité climat, à la place de la sonde du poêle (utile sans sonde d'ambiance RIKA). Affichage uniquement : le poêle continue de réguler sur sa propre sonde.",
+          "schedule_entity": "Optionnel. Un planning Home Assistant (Paramètres, Appareils et services, Entrées, Planning) dessiné sur une grille hebdomadaire. Le bouton « Copier le planning vers le poêle » l'envoie ensuite au poêle. Deux plages par jour au maximum."
         }
       }
     }
@@ -180,6 +282,18 @@
     },
     "command_failed": {
       "message": "La commande n'a pas atteint la clé à l'adresse {host} : {error}"
+    },
+    "schedule_end_before_start": {
+      "message": "Plage {slot} : la fin ({end}) est avant le début ({start}). Rien n'a été envoyé au poêle."
+    },
+    "schedule_not_chosen": {
+      "message": "Aucun planning n'est choisi. Créez-en un (Paramètres, Appareils et services, Entrées, Planning), puis choisissez-le dans les options de l'intégration Open Firenet."
+    },
+    "schedule_not_found": {
+      "message": "Le planning {entity} ne peut pas être lu. Vérifiez qu'il existe toujours, puis choisissez-le de nouveau dans les options de l'intégration."
+    },
+    "schedule_too_many_slots": {
+      "message": "Le poêle accepte deux plages par jour, et ce planning en a {count} pour {weekday}. Rien n'a été envoyé au poêle."
     }
   }
 }

@@ -9,6 +9,7 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntityDescription,
 )
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -55,6 +56,18 @@ BINARY_SENSOR_TYPES: tuple[OpenFirenetBinarySensorDescription, ...] = (
 )
 
 
+# On while schedule times were changed in Home Assistant and not sent to the stove yet (see schedule.py).
+# Diagnostic and not configuration: Home Assistant does not accept a binary sensor in the configuration category.
+SCHEDULE_PENDING = OpenFirenetBinarySensorDescription(
+    key="schedule_pending",
+    name="Schedule changes pending",
+    icon="mdi:calendar-alert",
+    entity_category=EntityCategory.DIAGNOSTIC,
+    entity_registry_enabled_default=False,
+    value_fn=lambda data: False,
+)
+
+
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
@@ -64,6 +77,7 @@ async def async_setup_entry(
             OpenFirenetBinarySensor(coordinator, entry, description)
             for description in BINARY_SENSOR_TYPES
         ]
+        + [OpenFirenetSchedulePendingSensor(coordinator, entry, SCHEDULE_PENDING)]
     )
 
 
@@ -102,3 +116,9 @@ class OpenFirenetBinarySensor(
     @property
     def is_on(self) -> bool:
         return self.entity_description.value_fn(self.coordinator.data)
+
+
+class OpenFirenetSchedulePendingSensor(OpenFirenetBinarySensor):
+    @property
+    def is_on(self) -> bool:
+        return self.coordinator.schedule_has_pending

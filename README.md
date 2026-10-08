@@ -14,6 +14,7 @@ Custom Home Assistant integration for RIKA pellet stoves controlled via the [ope
 - **MultiAir 1 & 2 Fan Controls**: Dedicated fan entities for MultiAir convection fans with on/off, Auto regulation, and manual speeds 1 to 5 (automatically enabled for MultiAir-equipped models).
 - **MultiAir Convection Trim**: Number sliders for -30% to +30% fine tuning of convection output.
 - **Weekly Heating Schedule**: Enable or disable the stove's internal weekly heating schedule via a switch, and adjust the setback temperature (10°C–25°C).
+- **Heating Schedule From Home Assistant**: Draw the week as a Home Assistant schedule and copy it to the stove with one button; time entities per slot are available for automations.
 - **Hopper Lid Sensor**: Real-time detection when the pellet hopper lid is opened.
 - **Full Sensor Telemetry**: Room temperature, combustion chamber temperature, mainboard temperature, pellet consumption counters, service countdown, draft and auger RPMs, operating state, and WiFi signal strength.
 - **27 RIKA Stove Models**: Automatic model detection and naming in device registry (DOMO, PARO, SUMO, FILO, COMO, etc.).
@@ -69,6 +70,29 @@ Copy the `custom_components/open_firenet/` directory into your Home Assistant `<
 |---|---|---|
 | `switch.open_firenet_heating_schedule` | Heating Schedule | Toggle the stove's internal weekly heating schedule on or off |
 | `switch.open_firenet_frost_protection` | Frost Protection | Toggle stove frost protection mode on or off |
+
+### Heating schedule
+
+The stove has two time slots per day. To set them from Home Assistant:
+
+1. Create a schedule: Settings > Devices & services > Helpers > Create helper > Schedule. Draw your week on the grid, with at most two time ranges per day.
+2. Open the options of the Open Firenet integration (Configure) and choose it under "Schedule to copy to the stove".
+3. On the device page, press **Copy schedule to the stove**. The whole week is sent in one command. Press it again after each change of the schedule.
+
+A day with more than two ranges is refused with a message, and nothing is sent. A range that ends at midnight is sent as ending at 23:59. The switch "Heating Schedule" still decides whether the stove follows its schedule.
+
+| Entity | Name | Description |
+|---|---|---|
+| `button.open_firenet_copy_schedule_to_the_stove` | Copy schedule to the stove | Sends the chosen Home Assistant schedule to the stove |
+
+For automations, each slot also exists as two time entities. They are **disabled by default**; enable the ones you need on the device page. A changed time is kept in Home Assistant until the send button is pressed.
+
+| Entity | Name | Description |
+|---|---|---|
+| `time.open_firenet_<day>_slot_<1 or 2>_start` / `_end` | e.g. Monday slot 1 start | Start and end of each slot (28 entities). A start equal to its end switches the slot off |
+| `button.open_firenet_send_schedule_to_the_stove` | Send schedule to the stove | Sends the changed slots. Refused, with nothing sent, if a slot ends before it starts |
+| `button.open_firenet_discard_schedule_changes` | Discard schedule changes | Drops the changes that were not sent |
+| `binary_sensor.open_firenet_schedule_changes_pending` | Schedule changes pending | On while changes are waiting to be sent |
 
 ### Number
 | Entity ID | Name | Description | Range |

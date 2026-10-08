@@ -2,6 +2,10 @@
 
 ## Non publié
 
+### Features
+- Heating schedule: set the stove's weekly schedule from Home Assistant. Draw it as a Home Assistant schedule (Settings, Devices & services, Helpers, Schedule: a weekly grid), choose that schedule in the options of the integration, then press "Copy schedule to the stove" on the device page. The stove takes two time ranges per day; a day with more is refused with a message, and nothing is sent. (#31)
+- Heating schedule, for automations: a start and an end time entity for each of the stove's slots, with "Send schedule to the stove" and "Discard schedule changes" buttons. These entities are disabled by default. (#31)
+
 ### Changes
 - Ready for bridge firmware 4.0. A command sent while the stove is not ready yet (in the seconds after the bridge starts) is sent again once, and if it still cannot go through you get a clear message instead of a raw error. If the bridge refuses the name it is called by, the message says what to do and gives its IP address, when adding the integration as well as later. (openfirenet/open-firenet#77)
 

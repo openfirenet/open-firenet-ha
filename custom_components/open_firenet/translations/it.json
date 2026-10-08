@@ -69,6 +69,9 @@
       },
       "hopper_lid": {
         "name": "Coperchio del serbatoio pellet"
+      },
+      "schedule_pending": {
+        "name": "Modifiche alle fasce orarie in sospeso"
       }
     },
     "fan": {
@@ -156,6 +159,103 @@
       "warning_code": {
         "name": "Codice di avviso"
       }
+    },
+    "time": {
+      "schedule_mon_1_start": {
+        "name": "Lunedì fascia 1 inizio"
+      },
+      "schedule_mon_1_end": {
+        "name": "Lunedì fascia 1 fine"
+      },
+      "schedule_mon_2_start": {
+        "name": "Lunedì fascia 2 inizio"
+      },
+      "schedule_mon_2_end": {
+        "name": "Lunedì fascia 2 fine"
+      },
+      "schedule_tue_1_start": {
+        "name": "Martedì fascia 1 inizio"
+      },
+      "schedule_tue_1_end": {
+        "name": "Martedì fascia 1 fine"
+      },
+      "schedule_tue_2_start": {
+        "name": "Martedì fascia 2 inizio"
+      },
+      "schedule_tue_2_end": {
+        "name": "Martedì fascia 2 fine"
+      },
+      "schedule_wed_1_start": {
+        "name": "Mercoledì fascia 1 inizio"
+      },
+      "schedule_wed_1_end": {
+        "name": "Mercoledì fascia 1 fine"
+      },
+      "schedule_wed_2_start": {
+        "name": "Mercoledì fascia 2 inizio"
+      },
+      "schedule_wed_2_end": {
+        "name": "Mercoledì fascia 2 fine"
+      },
+      "schedule_thu_1_start": {
+        "name": "Giovedì fascia 1 inizio"
+      },
+      "schedule_thu_1_end": {
+        "name": "Giovedì fascia 1 fine"
+      },
+      "schedule_thu_2_start": {
+        "name": "Giovedì fascia 2 inizio"
+      },
+      "schedule_thu_2_end": {
+        "name": "Giovedì fascia 2 fine"
+      },
+      "schedule_fri_1_start": {
+        "name": "Venerdì fascia 1 inizio"
+      },
+      "schedule_fri_1_end": {
+        "name": "Venerdì fascia 1 fine"
+      },
+      "schedule_fri_2_start": {
+        "name": "Venerdì fascia 2 inizio"
+      },
+      "schedule_fri_2_end": {
+        "name": "Venerdì fascia 2 fine"
+      },
+      "schedule_sat_1_start": {
+        "name": "Sabato fascia 1 inizio"
+      },
+      "schedule_sat_1_end": {
+        "name": "Sabato fascia 1 fine"
+      },
+      "schedule_sat_2_start": {
+        "name": "Sabato fascia 2 inizio"
+      },
+      "schedule_sat_2_end": {
+        "name": "Sabato fascia 2 fine"
+      },
+      "schedule_sun_1_start": {
+        "name": "Domenica fascia 1 inizio"
+      },
+      "schedule_sun_1_end": {
+        "name": "Domenica fascia 1 fine"
+      },
+      "schedule_sun_2_start": {
+        "name": "Domenica fascia 2 inizio"
+      },
+      "schedule_sun_2_end": {
+        "name": "Domenica fascia 2 fine"
+      }
+    },
+    "button": {
+      "schedule_copy": {
+        "name": "Copia la pianificazione sulla stufa"
+      },
+      "schedule_send": {
+        "name": "Invia le fasce orarie alla stufa"
+      },
+      "schedule_discard": {
+        "name": "Annulla le modifiche alle fasce orarie"
+      }
     }
   },
   "options": {
@@ -163,10 +263,12 @@
       "init": {
         "title": "Opzioni",
         "data": {
-          "external_temperature_sensor": "Sensore di temperatura esterno"
+          "external_temperature_sensor": "Sensore di temperatura esterno",
+          "schedule_entity": "Pianificazione da copiare sulla stufa"
         },
         "data_description": {
-          "external_temperature_sensor": "Facoltativo. Un sensore di temperatura di Home Assistant da usare per visualizzare la temperatura attuale dell'entità climate al posto di quella rilevata dal sensore della stufa (utile se non hai un sensore ambiente RIKA). Serve solo per la visualizzazione: la stufa continua a regolare il riscaldamento in base al proprio sensore."
+          "external_temperature_sensor": "Facoltativo. Un sensore di temperatura di Home Assistant da usare per visualizzare la temperatura attuale dell'entità climate al posto di quella rilevata dal sensore della stufa (utile se non hai un sensore ambiente RIKA). Serve solo per la visualizzazione: la stufa continua a regolare il riscaldamento in base al proprio sensore.",
+          "schedule_entity": "Opzionale. Una pianificazione di Home Assistant (Impostazioni, Dispositivi e servizi, Aiutanti, Pianificazione) disegnata su una griglia settimanale. Il pulsante «Copia la pianificazione sulla stufa» la invia poi alla stufa. Al massimo due fasce al giorno."
         }
       }
     }
@@ -180,6 +282,18 @@
     },
     "command_failed": {
       "message": "Il comando non ha raggiunto il bridge all'indirizzo {host}: {error}"
+    },
+    "schedule_end_before_start": {
+      "message": "Fascia {slot}: la fine ({end}) è prima dell'inizio ({start}). Non è stato inviato nulla alla stufa."
+    },
+    "schedule_not_chosen": {
+      "message": "Nessuna pianificazione è stata scelta. Creane una (Impostazioni, Dispositivi e servizi, Aiutanti, Pianificazione), poi sceglila nelle opzioni dell'integrazione Open Firenet."
+    },
+    "schedule_not_found": {
+      "message": "La pianificazione {entity} non può essere letta. Verifica che esista ancora, poi sceglila di nuovo nelle opzioni dell'integrazione."
+    },
+    "schedule_too_many_slots": {
+      "message": "La stufa accetta due fasce al giorno, e questa pianificazione ne ha {count} per {weekday}. Non è stato inviato nulla alla stufa."
     }
   }
 }
