@@ -11,6 +11,16 @@
           "host": "Example: open-firenet.local or 192.168.1.93",
           "scan_interval": "How often to poll the bridge, in seconds (10–300)"
         }
+      },
+      "reconfigure": {
+        "title": "Change the bridge's address",
+        "description": "Enter the address the bridge has now, for instance after your router gave it another IP address. Its entities, their history and your automations are kept.",
+        "data": {
+          "host": "IP address or hostname"
+        },
+        "data_description": {
+          "host": "Example: open-firenet.local or 192.168.1.93"
+        }
       }
     },
     "error": {
@@ -20,7 +30,8 @@
       "name_refused": "The bridge does not answer under this name. Enter its IP address, or add this name on the bridge's page (Bridge tab, section Access)."
     },
     "abort": {
-      "already_configured": "This device is already configured."
+      "already_configured": "This device is already configured.",
+      "reconfigure_successful": "The address was changed."
     }
   },
   "entity": {
