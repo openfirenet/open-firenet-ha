@@ -59,7 +59,7 @@ Copy the `custom_components/open_firenet/` directory into your Home Assistant `<
 |---|---|---|
 | `climate.open_firenet` | Open Firenet | Main thermostat: target temperature (14–28°C), HVAC mode (`heat`/`off`), preset mode (`manual`, `auto`, `comfort`), heating power (30–100%) |
 
-### Fan *(MultiAir models only: DOMO, PARO, PRIMO MULTIAIR, DOMO BACK, SUMO MULTIAIR, ROCO MULTIAIR)*
+### Fan *(MultiAir models: DOMO, DOMO BACK, PARO, SONO, PRIMO MULTIAIR, SUMO MULTIAIR, ROCO MULTIAIR)*
 | Entity ID | Name | Description |
 |---|---|---|
 | `fan.open_firenet_multiair_1` | MultiAir 1 | Convection fan 1: On/Off, Preset modes (`auto`, `1`..`5`), Speed percentage (20%–100%) |
