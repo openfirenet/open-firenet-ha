@@ -81,7 +81,7 @@ STOVE_MODELS: dict[int, str] = {
     29: "PRIMO MULTIAIR",
 }
 
-MULTIAIR_MODELS: set[int] = {4, 13, 17, 22, 23, 25, 29}
+MULTIAIR_MODELS: set[int] = {4, 13, 17, 22, 23, 25, 26, 29}
 
 
 def get_model_name(model_id: int | None, fallback: str | None = None) -> str:
