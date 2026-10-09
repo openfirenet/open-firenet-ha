@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.7.0 (2026-10-09)
 
 ### Features
 - The address of a bridge already added can be changed: menu ⋮ of the entry, "Reconfigure". Useful when your router gave the bridge another IP address: its entities, their history and your automations are kept. It used to require deleting the entry and adding it again.
