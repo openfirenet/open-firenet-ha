@@ -11,6 +11,16 @@
           "host": "Beispiel: open-firenet.local oder 192.168.1.93",
           "scan_interval": "Wie oft die Bridge abgefragt wird, in Sekunden (10–300)"
         }
+      },
+      "reconfigure": {
+        "title": "Adresse des Sticks ändern",
+        "description": "Geben Sie die aktuelle Adresse des Sticks ein, zum Beispiel nachdem Ihr Router ihm eine andere IP-Adresse gegeben hat. Seine Entitäten, deren Verlauf und Ihre Automatisierungen bleiben erhalten.",
+        "data": {
+          "host": "IP-Adresse oder Hostname"
+        },
+        "data_description": {
+          "host": "Beispiel: open-firenet.local oder 192.168.1.93"
+        }
       }
     },
     "error": {
@@ -20,7 +30,8 @@
       "name_refused": "Der Stick antwortet nicht unter diesem Namen. Geben Sie seine IP-Adresse ein oder tragen Sie diesen Namen auf der Seite des Sticks ein (Tab Stick, Abschnitt Zugriff)."
     },
     "abort": {
-      "already_configured": "Dieses Gerät ist bereits konfiguriert."
+      "already_configured": "Dieses Gerät ist bereits konfiguriert.",
+      "reconfigure_successful": "Die Adresse wurde geändert."
     }
   },
   "entity": {

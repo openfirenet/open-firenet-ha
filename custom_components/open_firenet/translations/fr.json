@@ -11,6 +11,16 @@
           "host": "Exemple : open-firenet.local ou 192.168.1.93",
           "scan_interval": "Fréquence de scrutation du pont, en secondes (10–300)"
         }
+      },
+      "reconfigure": {
+        "title": "Changer l'adresse de la clé",
+        "description": "Saisissez l'adresse actuelle de la clé, par exemple après que votre box lui a donné une autre adresse IP. Ses entités, leur historique et vos automatisations sont conservés.",
+        "data": {
+          "host": "Adresse IP ou nom d'hôte"
+        },
+        "data_description": {
+          "host": "Exemple : open-firenet.local ou 192.168.1.93"
+        }
       }
     },
     "error": {
@@ -20,7 +30,8 @@
       "name_refused": "La clé ne répond pas sous ce nom. Saisissez son adresse IP, ou ajoutez ce nom sur la page de la clé (onglet Clé, section Accès)."
     },
     "abort": {
-      "already_configured": "Cet appareil est déjà configuré."
+      "already_configured": "Cet appareil est déjà configuré.",
+      "reconfigure_successful": "L'adresse a été modifiée."
     }
   },
   "entity": {

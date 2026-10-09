@@ -11,6 +11,16 @@
           "host": "Esempio: open-firenet.local o 192.168.1.93",
           "scan_interval": "Ogni quanto interrogare il bridge, in secondi (10–300)"
         }
+      },
+      "reconfigure": {
+        "title": "Cambia l'indirizzo del bridge",
+        "description": "Inserisci l'indirizzo attuale del bridge, per esempio dopo che il router gli ha assegnato un altro indirizzo IP. Le sue entità, il loro storico e le tue automazioni vengono conservati.",
+        "data": {
+          "host": "Indirizzo IP o nome host"
+        },
+        "data_description": {
+          "host": "Esempio: open-firenet.local o 192.168.1.93"
+        }
       }
     },
     "error": {
@@ -20,7 +30,8 @@
       "name_refused": "Il bridge non risponde con questo nome. Inserisci il suo indirizzo IP, oppure aggiungi questo nome nella pagina del bridge (scheda Bridge, sezione Accesso)."
     },
     "abort": {
-      "already_configured": "Questo dispositivo è già configurato."
+      "already_configured": "Questo dispositivo è già configurato.",
+      "reconfigure_successful": "L'indirizzo è stato modificato."
     }
   },
   "entity": {
