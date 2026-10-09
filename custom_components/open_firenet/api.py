@@ -67,19 +67,25 @@ _MAX_RETRY_DELAY = 10.0
 
 
 class OpenFirenetClient:
-    """Thin async client around the bridge's REST API (single session)."""
+    """Thin async client around the bridge's REST API.
 
-    def __init__(self, host: str) -> None:
+    Given Home Assistant's own session, it uses it and never closes it: that session resolves `.local` names
+    itself, which the system resolver cannot do where Home Assistant runs in a container. Without one it opens
+    its own session.
+    """
+
+    def __init__(self, host: str, session: aiohttp.ClientSession | None = None) -> None:
         self._base = f"http://{host}"
-        self._session: aiohttp.ClientSession | None = None
+        self._session: aiohttp.ClientSession | None = session
+        self._owns_session = session is None
 
     def _get_session(self) -> aiohttp.ClientSession:
-        if self._session is None or self._session.closed:
+        if self._session is None or (self._owns_session and self._session.closed):
             self._session = aiohttp.ClientSession()
         return self._session
 
     async def close(self) -> None:
-        if self._session and not self._session.closed:
+        if self._owns_session and self._session and not self._session.closed:
             await self._session.close()
 
     async def async_validate(self) -> bool:

@@ -9,6 +9,7 @@ from homeassistant.config_entries import ConfigEntry, ConfigFlow, ConfigFlowResu
 from homeassistant.const import CONF_HOST, CONF_SCAN_INTERVAL
 from homeassistant.core import callback
 from homeassistant.helpers import selector
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import BridgeRefusedName, OpenFirenetClient
 from .const import CONF_EXTERNAL_TEMP_SENSOR, CONF_SCHEDULE_ENTITY, DEFAULT_SCAN_INTERVAL, DOMAIN
@@ -35,7 +36,7 @@ class OpenFirenetConfigFlow(ConfigFlow, domain=DOMAIN):
 
     async def _check_host(self, host: str) -> str | None:
         """Ask the bridge at this address whether it answers: None when it does, else the key of the error."""
-        client = OpenFirenetClient(host)
+        client = OpenFirenetClient(host, async_get_clientsession(self.hass))
         try:
             async with asyncio.timeout(8):
                 if not await client.async_validate():

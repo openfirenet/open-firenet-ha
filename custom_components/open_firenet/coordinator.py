@@ -10,6 +10,7 @@ from homeassistant.core import HomeAssistant
 from datetime import time
 
 from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import BridgeRefusedName, OpenFirenetClient, StoveNotReady
@@ -45,7 +46,7 @@ def _to_snake(key: str) -> str:
 class OpenFirenetCoordinator(DataUpdateCoordinator):
     def __init__(self, hass: HomeAssistant, host: str, scan_interval: int) -> None:
         self.host = host
-        self._client = OpenFirenetClient(host)
+        self._client = OpenFirenetClient(host, async_get_clientsession(hass))
         super().__init__(
             hass,
             _LOGGER,
