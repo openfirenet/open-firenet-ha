@@ -23,7 +23,7 @@ Custom Home Assistant integration for RIKA pellet stoves controlled via the [ope
 
 ## Requirements
 
-- An ESP32 running [Open Firenet firmware](https://github.com/openfirenet/open-firenet) (v2.0+ or v2.3.0+ for MultiAir & Schedule), connected to your RIKA stove and WiFi network.
+- An ESP32 running [Open Firenet firmware](https://github.com/openfirenet/open-firenet), connected to your RIKA stove and WiFi network. With bridge firmware 4.0 or later, use version 2.6.0 or later of this integration.
 - Home Assistant 2024.1 or later.
 - HACS (recommended) or manual installation.
 
@@ -59,7 +59,7 @@ Copy the `custom_components/open_firenet/` directory into your Home Assistant `<
 |---|---|---|
 | `climate.open_firenet` | Open Firenet | Main thermostat: target temperature (14–28°C), HVAC mode (`heat`/`off`), preset mode (`manual`, `auto`, `comfort`), heating power (30–100%) |
 
-### Fan *(MultiAir models: DOMO, DOMO BACK, PARO, SONO, PRIMO MULTIAIR, SUMO MULTIAIR, ROCO MULTIAIR)*
+### Fan *(MultiAir models: DOMO, DOMO BACK, PARO, SONO, CONNECT, PRIMO MULTIAIR, SUMO MULTIAIR, ROCO MULTIAIR)*
 | Entity ID | Name | Description |
 |---|---|---|
 | `fan.open_firenet_multiair_1` | MultiAir 1 | Convection fan 1: On/Off, Preset modes (`auto`, `1`..`5`), Speed percentage (20%–100%) |
