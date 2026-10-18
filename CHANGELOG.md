@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.13.0 (2026-10-18)
 
 ### New
 - Two diagnostic sensors, **Insertion Motor** and **Insertion Motor Current**, show the values the bridge reports for the insertion motor. They are off by default (enable them in the entity list) and only exist on stoves that report them. (#53)
