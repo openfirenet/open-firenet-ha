@@ -181,6 +181,12 @@
       "air_flaps_target_percent": {
         "name": "Posizione impostata delle serrande dell'aria"
       },
+      "insertion_motor": {
+        "name": "Motore di inserimento"
+      },
+      "insertion_motor_current": {
+        "name": "Corrente del motore di inserimento"
+      },
       "error_code": {
         "name": "Codice di errore"
       },

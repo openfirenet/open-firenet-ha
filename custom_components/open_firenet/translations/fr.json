@@ -181,6 +181,12 @@
       "air_flaps_target_percent": {
         "name": "Consigne volets d'air"
       },
+      "insertion_motor": {
+        "name": "Moteur d'insertion"
+      },
+      "insertion_motor_current": {
+        "name": "Courant du moteur d'insertion"
+      },
       "error_code": {
         "name": "Code d'erreur"
       },
