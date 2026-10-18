@@ -160,6 +160,25 @@ SENSOR_TYPES: tuple[OpenFirenetSensorEntityDescription, ...] = (
         optional=True,
         value_fn=lambda data: data.get("sensors", {}).get("air_flaps_target_percent"),
     ),
+    # The bridge gives these two only in its list of raw values; their unit is not known, so no unit and off by default.
+    OpenFirenetSensorEntityDescription(
+        key="insertion_motor",
+        name="Insertion Motor",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        state_class=SensorStateClass.MEASUREMENT,
+        optional=True,
+        value_fn=lambda data: data.get("raw_sensors", {}).get("insertionMotor"),
+    ),
+    OpenFirenetSensorEntityDescription(
+        key="insertion_motor_current",
+        name="Insertion Motor Current",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        state_class=SensorStateClass.MEASUREMENT,
+        optional=True,
+        value_fn=lambda data: data.get("raw_sensors", {}).get("insertionCurrent"),
+    ),
     OpenFirenetSensorEntityDescription(
         key="error_code",
         name="Error Code",

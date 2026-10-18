@@ -181,6 +181,12 @@
       "air_flaps_target_percent": {
         "name": "Luftklappen Sollwert"
       },
+      "insertion_motor": {
+        "name": "Einschubmotor"
+      },
+      "insertion_motor_current": {
+        "name": "Einschubmotor Strom"
+      },
       "error_code": {
         "name": "Fehlercode"
       },

@@ -181,6 +181,12 @@
       "air_flaps_target_percent": {
         "name": "Air Flaps Target"
       },
+      "insertion_motor": {
+        "name": "Insertion Motor"
+      },
+      "insertion_motor_current": {
+        "name": "Insertion Motor Current"
+      },
       "error_code": {
         "name": "Error Code"
       },
