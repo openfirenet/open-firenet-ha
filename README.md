@@ -4,7 +4,7 @@
   <img src="https://raw.githubusercontent.com/openfirenet/open-firenet-ha/main/custom_components/open_firenet/brand/logo.png" alt="Open Firenet Logo" width="400">
 </p>
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
 
 Custom Home Assistant integration for RIKA pellet stoves controlled via the [open-firenet](https://github.com/openfirenet/open-firenet) WiFi bridge.
 
@@ -33,10 +33,10 @@ Custom Home Assistant integration for RIKA pellet stoves controlled via the [ope
 
 ### Via HACS (recommended)
 
-1. In HACS, go to **Integrations** → ⋮ (overflow menu) → **Custom repositories**.
-2. Add `https://github.com/openfirenet/open-firenet-ha` with category **Integration**.
-3. Search for **Open Firenet** and click **Download**.
-4. Restart Home Assistant.
+1. In HACS, search for **Open Firenet** and click **Download**.
+2. Restart Home Assistant.
+
+If it does not show up yet, add `https://github.com/openfirenet/open-firenet-ha` first: in HACS, open the ⋮ (overflow menu) → **Custom repositories**, and choose the category **Integration**.
 
 ### Manual Installation
 
