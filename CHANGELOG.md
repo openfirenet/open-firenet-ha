@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.14.0 (2026-10-22)
 
 ### Changes
 - **Insertion Motor** and **Insertion Motor Current** now appear with the other sensors instead of under Diagnostic, and are no longer off by default (they still only exist on stoves that report them). The motor is shown in ‰ like on the stove's display, and both have an icon. If you had them disabled, enable them again in the entity list. (#57)
