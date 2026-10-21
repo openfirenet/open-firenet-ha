@@ -154,6 +154,12 @@ Open Firenet automatically identifies the stove model via mainboard query and di
 
 ---
 
+## Dashboard card
+
+[Open Firenet Card](https://github.com/homeassistant-fr-ecosystem/open-firenet-card) is a Lovelace card made by Sylvain Guernion ([@sguernion](https://github.com/sguernion)), not by the Open Firenet project. It shows the state of the stove, the temperatures and the consumption in one card, and can also send commands to the stove. To install it, add the repository to HACS as a custom repository with the category **Dashboard**.
+
+---
+
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
