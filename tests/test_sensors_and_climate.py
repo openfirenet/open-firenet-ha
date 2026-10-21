@@ -96,7 +96,7 @@ async def test_options_flow_sets_external_sensor(hass, bridge):
     assert hass.states.get(climate_id).attributes["current_temperature"] == 19.5
 
 
-async def test_insertion_motor_sensors_from_raw_values_and_off_by_default(hass, bridge):
+async def test_insertion_motor_sensors_from_raw_values_in_the_sensors_card(hass, bridge):
     bridge.state["raw_sensors"] = {"insertionMotor": 226, "insertionCurrent": 21}
     entry = await _setup(hass, bridge)
     registry = er.async_get(hass)
@@ -104,8 +104,14 @@ async def test_insertion_motor_sensors_from_raw_values_and_off_by_default(hass, 
         entity_id = _entity_id(hass, entry, "sensor", f"sensor_{key}")
         assert entity_id is not None
         reg_entry = registry.async_get(entity_id)
-        assert reg_entry.disabled_by == er.RegistryEntryDisabler.INTEGRATION
-        assert reg_entry.entity_category == "diagnostic"
+        assert reg_entry.disabled_by is None
+        assert reg_entry.entity_category is None
+    assert hass.states.get(_entity_id(hass, entry, "sensor", "sensor_insertion_motor")).attributes[
+        "unit_of_measurement"
+    ] == "‰"
+    assert "unit_of_measurement" not in hass.states.get(
+        _entity_id(hass, entry, "sensor", "sensor_insertion_motor_current")
+    ).attributes
 
 
 async def test_insertion_motor_sensors_not_created_when_not_reported(hass, bridge):
