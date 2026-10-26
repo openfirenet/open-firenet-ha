@@ -140,6 +140,9 @@
       "pellet_hours": {
         "name": "Ore di funzionamento a pellet"
       },
+      "log_runtime": {
+        "name": "Ore di funzionamento a legna"
+      },
       "service_countdown_kg": {
         "name": "Contatore pellet prima della manutenzione"
       },

@@ -119,6 +119,9 @@
       "pellet_hours": {
         "default": "mdi:timer-outline"
       },
+      "log_runtime": {
+        "default": "mdi:fireplace"
+      },
       "service_countdown_kg": {
         "default": "mdi:wrench-clock"
       },

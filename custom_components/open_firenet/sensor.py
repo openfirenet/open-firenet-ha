@@ -117,6 +117,19 @@ SENSOR_TYPES: tuple[OpenFirenetSensorEntityDescription, ...] = (
         value_fn=lambda data: data.get("sensors", {}).get("pellet_hours"),
     ),
     OpenFirenetSensorEntityDescription(
+        key="log_runtime",
+        name="Split Log Operating Time",
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_unit_of_measurement=UnitOfTime.HOURS,
+        suggested_display_precision=1,
+        device_class=SensorDeviceClass.DURATION,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        # Bridge firmware after 4.7.0. The stove counts this one in minutes. A stove that burns pellets alone reports 0: no
+        # entity for it, and one that burns split logs gets it when the value is above 0 at the start of the integration.
+        optional=True,
+        value_fn=lambda data: data.get("sensors", {}).get("log_runtime") or None,
+    ),
+    OpenFirenetSensorEntityDescription(
         key="service_countdown_kg",
         name="Service Countdown",
         native_unit_of_measurement=UnitOfMass.KILOGRAMS,

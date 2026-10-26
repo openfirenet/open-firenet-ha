@@ -140,6 +140,9 @@
       "pellet_hours": {
         "name": "Pellet Operating Hours"
       },
+      "log_runtime": {
+        "name": "Split Log Operating Time"
+      },
       "service_countdown_kg": {
         "name": "Service Countdown"
       },

@@ -140,6 +140,9 @@
       "pellet_hours": {
         "name": "Pellet-Betriebsstunden"
       },
+      "log_runtime": {
+        "name": "Scheitholz-Betriebsstunden"
+      },
       "service_countdown_kg": {
         "name": "Wartungszähler"
       },
