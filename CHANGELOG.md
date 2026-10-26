@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.15.0 (2026-10-26)
 
 ### New
 - **Split Log Operating Time** sensor for combined (pellet and split log) stoves, shown in hours. It needs a bridge firmware newer than 4.7.0, and exists only for a stove that reports some split log time: one that burns pellets alone does not get it. (#61)
