@@ -83,6 +83,7 @@ COMMAND_TO_STATE_KEY = {
     "frostProtectionTemp": "frost_protection_temperature",
     "room_temperature_offset": "room_temperature_offset",
     "bakeTarget": "bake_target_temperature",
+    "ecoMode": "eco_mode",
 }
 
 

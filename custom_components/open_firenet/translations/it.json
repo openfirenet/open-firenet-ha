@@ -83,6 +83,9 @@
       },
       "schedule_pending": {
         "name": "Modifiche alle fasce orarie in sospeso"
+      },
+      "eco_mode_possible": {
+        "name": "Modalità eco possibile"
       }
     },
     "fan": {
@@ -99,6 +102,9 @@
       },
       "frost_protection": {
         "name": "Protezione antigelo"
+      },
+      "eco_mode": {
+        "name": "Modalità eco"
       }
     },
     "number": {

@@ -53,6 +53,13 @@ BINARY_SENSOR_TYPES: tuple[OpenFirenetBinarySensorDescription, ...] = (
             else bool(data.get("stove", {}).get("state_mask", 0) & 2)
         ),
     ),
+    OpenFirenetBinarySensorDescription(
+        key="eco_mode_possible",
+        name="Eco Mode Possible",
+        icon="mdi:leaf",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: bool(data.get("controls", {}).get("eco_mode_possible", False)),
+    ),
 )
 
 

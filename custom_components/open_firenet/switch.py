@@ -21,6 +21,7 @@ async def async_setup_entry(
     async_add_entities([
         OpenFirenetScheduleSwitch(coordinator, entry),
         OpenFirenetFrostProtectionSwitch(coordinator, entry),
+        OpenFirenetEcoModeSwitch(coordinator, entry),
     ])
 
 
@@ -115,3 +116,49 @@ class OpenFirenetFrostProtectionSwitch(
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         await self.coordinator.async_set_controls(frostProtectionActive=False)
+
+
+class OpenFirenetEcoModeSwitch(
+    CoordinatorEntity[OpenFirenetCoordinator], SwitchEntity
+):
+    """Switch for the eco mode of the stove, offered by the stove only when it says the mode is possible."""
+
+    _attr_has_entity_name = True
+    _attr_name = "Eco Mode"
+    _attr_translation_key = "eco_mode"
+    _attr_icon = "mdi:leaf"
+
+    def __init__(self, coordinator: OpenFirenetCoordinator, entry: ConfigEntry) -> None:
+        super().__init__(coordinator)
+        self._entry = entry
+        self._attr_unique_id = f"{entry.entry_id}_switch_eco_mode"
+
+    @property
+    def device_info(self) -> dict:
+        device = self.coordinator.data.get("device", {})
+        stove = self.coordinator.data.get("stove", {})
+        model_name = stove.get("model_name") or get_model_name(stove.get("model"))
+        return {
+            "identifiers": {(DOMAIN, self._entry.entry_id)},
+            "name": device.get("name", "Open Firenet"),
+            "manufacturer": "Open Firenet",
+            "model": f"RIKA {model_name}",
+            "sw_version": f"Firmware v{device.get('version', '2.0.0')} (MB {stove.get('mainboard_version') or '?'})",
+            "configuration_url": f"http://{self.coordinator.host}",
+        }
+
+    @property
+    def available(self) -> bool:
+        # Not available while the stove does not allow the eco mode (or a bridge that does not tell it yet).
+        controls = self.coordinator.data.get("controls", {})
+        return super().available and bool(controls.get("eco_mode_possible", False))
+
+    @property
+    def is_on(self) -> bool:
+        return bool(self.coordinator.data.get("controls", {}).get("eco_mode", False))
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        await self.coordinator.async_set_controls(ecoMode=True)
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        await self.coordinator.async_set_controls(ecoMode=False)
