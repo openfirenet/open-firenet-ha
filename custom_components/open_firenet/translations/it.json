@@ -348,7 +348,7 @@
       "message": "Questa versione non ha un file firmware, un elenco di checksum o una firma utilizzabili da Home Assistant. Aggiorna con l'installer."
     },
     "update_stove_running": {
-      "message": "La stufa è in funzione. Il bridge si riavvia durante un aggiornamento: attendi che la stufa sia spenta, poi riprova."
+      "message": "La stufa non è spenta. Il bridge si riavvia durante un aggiornamento: spegni la stufa, poi riprova."
     },
     "update_password_required": {
       "message": "Il bridge richiede una password per gli aggiornamenti wireless. Inseriscila nelle opzioni dell'integrazione, poi riprova."

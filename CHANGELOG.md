@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+### Fixes
+- Installing a bridge firmware update from Home Assistant is now refused unless the stove is off, like on the bridge's own page. It used to be allowed while the stove was in standby, where it can ignite at any time. (#66)
+
 ## v2.15.0 (2026-10-26)
 
 ### New

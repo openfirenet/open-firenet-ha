@@ -348,7 +348,7 @@
       "message": "This release has no firmware file, checksum list or signature that Home Assistant can use. Update with the installer."
     },
     "update_stove_running": {
-      "message": "The stove is burning. The bridge restarts during an update, so wait until the stove is off, then try again."
+      "message": "The stove is not off. The bridge restarts during an update, so switch the stove off, then try again."
     },
     "update_password_required": {
       "message": "The bridge asks for a password for wireless updates. Enter it in the options of the integration, then try again."
