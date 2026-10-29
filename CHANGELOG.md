@@ -5,8 +5,6 @@
 ### New
 - **Eco Mode** switch, and an **Eco Mode Possible** sensor (Diagnostic), for the stoves that have an eco mode. The switch is unavailable while the stove says the mode is not possible. It needs a bridge firmware 3.0.0 or newer. (#68)
 
-## Non publié
-
 ### Fixes
 - Installing a bridge firmware update from Home Assistant is now refused unless the stove is off, like on the bridge's own page. It used to be allowed while the stove was in standby, where it can ignite at any time. (#66)
 
