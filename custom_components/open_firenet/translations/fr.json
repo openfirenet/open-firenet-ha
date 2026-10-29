@@ -83,6 +83,9 @@
       },
       "schedule_pending": {
         "name": "Modifications des plages en attente"
+      },
+      "eco_mode_possible": {
+        "name": "Mode éco possible"
       }
     },
     "fan": {
@@ -99,6 +102,9 @@
       },
       "frost_protection": {
         "name": "Protection hors-gel"
+      },
+      "eco_mode": {
+        "name": "Mode éco"
       }
     },
     "number": {

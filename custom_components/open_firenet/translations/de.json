@@ -83,6 +83,9 @@
       },
       "schedule_pending": {
         "name": "Heizzeiten-Änderungen ausstehend"
+      },
+      "eco_mode_possible": {
+        "name": "Eco-Modus möglich"
       }
     },
     "fan": {
@@ -99,6 +102,9 @@
       },
       "frost_protection": {
         "name": "Frostschutz"
+      },
+      "eco_mode": {
+        "name": "Eco-Modus"
       }
     },
     "number": {

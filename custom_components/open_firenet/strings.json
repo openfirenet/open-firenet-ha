@@ -83,6 +83,9 @@
       },
       "schedule_pending": {
         "name": "Schedule changes pending"
+      },
+      "eco_mode_possible": {
+        "name": "Eco Mode Possible"
       }
     },
     "fan": {
@@ -99,6 +102,9 @@
       },
       "frost_protection": {
         "name": "Frost Protection"
+      },
+      "eco_mode": {
+        "name": "Eco Mode"
       }
     },
     "number": {

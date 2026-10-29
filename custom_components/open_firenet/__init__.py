@@ -41,6 +41,7 @@ def _cleanup_orphaned_entities(hass: HomeAssistant, entry: ConfigEntry, multiair
         f"{entry.entry_id}_climate",
         f"{entry.entry_id}_switch_heating_schedule",
         f"{entry.entry_id}_switch_frost_protection",
+        f"{entry.entry_id}_switch_eco_mode",
         f"{entry.entry_id}_number_heating_power",
         f"{entry.entry_id}_number_setback_temperature",
         f"{entry.entry_id}_number_frost_protection_temperature",
