@@ -348,7 +348,7 @@
       "message": "Dieses Release enthält keine Firmware-Datei, Prüfsummenliste oder Signatur, die Home Assistant verwenden kann. Aktualisieren Sie mit dem Installer."
     },
     "update_stove_running": {
-      "message": "Der Ofen heizt. Die Bridge startet während eines Updates neu: Warten Sie, bis der Ofen aus ist, und versuchen Sie es dann erneut."
+      "message": "Der Ofen ist nicht aus. Die Bridge startet während eines Updates neu: Schalten Sie den Ofen aus und versuchen Sie es dann erneut."
     },
     "update_password_required": {
       "message": "Die Bridge verlangt ein Passwort für drahtlose Updates. Geben Sie es in den Optionen der Integration ein und versuchen Sie es erneut."

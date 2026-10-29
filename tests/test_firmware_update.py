@@ -158,6 +158,17 @@ async def test_install_refused_while_the_stove_burns(hass, bridge, ota):
     assert ota.downloads == 0 and ota.sent == []
 
 
+async def test_install_refused_while_the_stove_is_in_standby(hass, bridge, ota):
+    ota.bridge = bridge
+    bridge.state["stove"]["state"] = "standby"
+    entry = await _setup_with(hass, bridge)
+
+    with pytest.raises(HomeAssistantError):
+        await _install(hass, entry)
+
+    assert ota.downloads == 0 and ota.sent == []
+
+
 async def test_install_refused_when_the_slot_is_too_small(hass, bridge, ota):
     ota.bridge = bridge
     bridge.state["device"]["ota_slot_bytes"] = 1000

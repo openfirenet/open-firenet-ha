@@ -132,8 +132,9 @@ class OpenFirenetFirmwareUpdate(CoordinatorEntity[OpenFirenetCoordinator], Updat
         device = data.get("device") or {}
         stove = data.get("stove") or {}
 
-        # The bridge restarts: a stove that is burning would lose its link for a moment.
-        if stove.get("is_burning"):
+        # The bridge restarts: only install while the stove is off, as the bridge's own page does. A stove in standby
+        # is switched on and can ignite at any time.
+        if stove.get("state") != "off" or stove.get("is_burning"):
             raise HomeAssistantError(translation_domain=DOMAIN, translation_key="update_stove_running")
         password = self._entry.options.get(CONF_OTA_PASSWORD) or None
         if device.get("ota_password_set") and not password:

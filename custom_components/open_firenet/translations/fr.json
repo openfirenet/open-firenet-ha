@@ -348,7 +348,7 @@
       "message": "Cette version n'a pas de fichier de firmware, de liste de sommes de contrôle ou de signature utilisable par Home Assistant. Mettez à jour avec l'installateur."
     },
     "update_stove_running": {
-      "message": "Le poêle chauffe. La clé redémarre pendant une mise à jour : attendez que le poêle soit éteint, puis réessayez."
+      "message": "Le poêle n'est pas éteint. La clé redémarre pendant une mise à jour : éteignez le poêle, puis réessayez."
     },
     "update_password_required": {
       "message": "La clé demande un mot de passe pour les mises à jour sans fil. Saisissez-le dans les options de l'intégration, puis réessayez."
