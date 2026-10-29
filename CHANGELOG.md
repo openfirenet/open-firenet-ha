@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.16.0 (2026-10-29)
 
 ### New
 - **Eco Mode** switch, and an **Eco Mode Possible** sensor (Diagnostic), for the stoves that have an eco mode. The switch is unavailable while the stove says the mode is not possible. It needs a bridge firmware 3.0.0 or newer. (#68)
