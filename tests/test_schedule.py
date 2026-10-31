@@ -250,3 +250,46 @@ async def test_copy_without_a_chosen_schedule_says_what_to_do(hass, bridge, setu
         await _press(hass, _eid(hass, entry, "button", "button_schedule_copy"))
     assert err.value.translation_key == "schedule_not_found"
     assert bridge.posts == []
+
+
+async def test_stove_with_one_slot_per_day_registers_14_time_entities(hass, bridge, setup_integration):
+    entry = setup_integration
+    bridge.state["schedule_slots_per_day"] = 1
+    await _enable_slot_entities(hass, entry)
+    time_entities = [e for e in er.async_entries_for_config_entry(er.async_get(hass), entry.entry_id) if e.domain == "time"]
+    assert len(time_entities) == 14
+    assert _eid(hass, entry, "time", "time_schedule_mon_1_start") is not None
+    assert er.async_get(hass).async_get_entity_id("time", "open_firenet", f"{entry.entry_id}_time_schedule_mon_2_start") is None
+
+
+async def test_stove_with_one_slot_per_day_refuses_two_ranges_in_a_day(hass, bridge, setup_integration):
+    entry = setup_integration
+    bridge.state["schedule_slots_per_day"] = 1
+    await _with_schedule(hass, bridge, entry, slot_entities=False)
+    schedule_entity = await _ha_schedule(
+        hass, monday=[{"from": "06:30:00", "to": "08:00:00"}, {"from": "17:00:00", "to": "22:30:00"}]
+    )
+    await _choose(hass, entry, schedule_entity)
+
+    with pytest.raises(ServiceValidationError) as err:
+        await _press(hass, _eid(hass, entry, "button", "button_schedule_copy"))
+
+    assert err.value.translation_key == "schedule_too_many_slots"
+    assert err.value.translation_placeholders == {"weekday": "monday", "count": "2"}
+    assert bridge.posts == []
+
+
+async def test_stove_with_one_slot_per_day_copies_single_range(hass, bridge, setup_integration):
+    entry = setup_integration
+    bridge.state["schedule_slots_per_day"] = 1
+    await _with_schedule(hass, bridge, entry, slot_entities=False)
+    schedule_entity = await _ha_schedule(
+        hass, monday=[{"from": "08:00:00", "to": "10:00:00"}]
+    )
+    await _choose(hass, entry, schedule_entity)
+
+    await _press(hass, _eid(hass, entry, "button", "button_schedule_copy"))
+
+    assert len(bridge.posts) == 1
+    assert bridge.posts[0]["heatTimeMon1"] == 8001000
+    assert bridge.posts[0]["heatTimeMon2"] == 0

@@ -2,6 +2,9 @@
 
 ## Non publié
 
+### New
+- Support for stoves with a single heating schedule slot per day (firmware 2.25): only 14 time entities are created instead of 28, and copying a Home Assistant schedule refuses plans with more than one slot per day. (openfirenet/open-firenet#110)
+
 ### Fixes
 - The eco mode switch can now always be switched off. Before, the switch was greyed out once the stove reported the mode as no longer possible, so a stove stuck in eco mode kept asking for a log. (openfirenet/open-firenet#131)
 

@@ -174,8 +174,9 @@ class OpenFirenetCoordinator(DataUpdateCoordinator):
                 translation_key="schedule_not_found",
                 translation_placeholders={"entity": schedule_entity},
             )
+        slots_per_day = self.data.get("schedule_slots_per_day", 2)
         try:
-            slots = slots_from_ha_schedule(plan)
+            slots = slots_from_ha_schedule(plan, max_slots_per_day=slots_per_day)
         except TooManySlots as err:
             raise ServiceValidationError(
                 translation_domain=DOMAIN,
