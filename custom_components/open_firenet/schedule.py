@@ -87,16 +87,20 @@ def _as_time(value) -> time:
     return time(23, 59) if hour == 24 else time(hour, minute)
 
 
-def slots_from_ha_schedule(plan: dict) -> list[int]:
+def slots_from_ha_schedule(plan: dict, max_slots_per_day: int = SLOTS_PER_DAY) -> list[int]:
     """The 14 slot values of a Home Assistant schedule ({"monday": [{"from": ..., "to": ...}, ...], ...}).
 
-    A day without a range gets two slots that are off. Raises TooManySlots when a day has more than two ranges.
+    A day without a range gets two slots that are off. Raises TooManySlots when a day has more ranges than allowed.
     """
     slots: list[int] = []
     for weekday in HA_WEEKDAYS:
         ranges = sorted(plan.get(weekday) or [], key=lambda r: _as_time(r["from"]))
-        if len(ranges) > SLOTS_PER_DAY:
+        if len(ranges) > max_slots_per_day:
             raise TooManySlots(weekday, len(ranges))
         for i in range(SLOTS_PER_DAY):
-            slots.append(encode_slot(_as_time(ranges[i]["from"]), _as_time(ranges[i]["to"])) if i < len(ranges) else 0)
+            slots.append(
+                encode_slot(_as_time(ranges[i]["from"]), _as_time(ranges[i]["to"]))
+                if i < len(ranges) and i < max_slots_per_day
+                else 0
+            )
     return slots
