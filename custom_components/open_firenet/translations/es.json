@@ -1,0 +1,399 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conexión a Open Firenet",
+        "data": {
+          "host": "Dirección IP o nombre de host",
+          "scan_interval": "Intervalo de sondeo (segundos)"
+        },
+        "data_description": {
+          "host": "Ejemplo: open-firenet.local o 192.168.1.93",
+          "scan_interval": "Frecuencia de sondeo del pincho, en segundos (10–300)"
+        }
+      },
+      "reconfigure": {
+        "title": "Cambiar la dirección del pincho",
+        "description": "Introduzca la dirección actual del pincho, por ejemplo después de que su caja le haya dado otra dirección IP. Sus entidades, su historial y sus automatizaciones se conservan.",
+        "data": {
+          "host": "Dirección IP o nombre de host"
+        },
+        "data_description": {
+          "host": "Ejemplo: open-firenet.local o 192.168.1.93"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se puede conectar al dispositivo. Verifique la dirección IP y que el dispositivo esté encendido.",
+      "invalid_response": "El dispositivo respondió pero no parece ser un puente Open Firenet.",
+      "unknown": "Error inesperado.",
+      "name_refused": "El pincho no responde con este nombre. Introduzca su dirección IP, o agregue este nombre en la página del pincho (pestaña Pincho, sección Acceso)."
+    },
+    "abort": {
+      "already_configured": "Este dispositivo ya está configurado.",
+      "reconfigure_successful": "La dirección ha sido modificada."
+    }
+  },
+  "entity": {
+    "climate": {
+      "open_firenet": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "manual": "Manual",
+              "auto": "Automático",
+              "comfort": "Confort"
+            }
+          },
+          "fan_mode": {
+            "name": "Potencia de calefacción",
+            "state": {
+              "power_30": "30 %",
+              "power_35": "35 %",
+              "power_40": "40 %",
+              "power_45": "45 %",
+              "power_50": "50 %",
+              "power_55": "55 %",
+              "power_60": "60 %",
+              "power_65": "65 %",
+              "power_70": "70 %",
+              "power_75": "75 %",
+              "power_80": "80 %",
+              "power_85": "85 %",
+              "power_90": "90 %",
+              "power_95": "95 %",
+              "power_100": "100 %"
+            }
+          }
+        }
+      }
+    },
+    "binary_sensor": {
+      "connected": {
+        "name": "Conectado"
+      },
+      "burning": {
+        "name": "Combustión activa"
+      },
+      "problem": {
+        "name": "Error estufa"
+      },
+      "hopper_lid": {
+        "name": "Tapa del depósito"
+      },
+      "schedule_pending": {
+        "name": "Cambios de franjas pendientes"
+      },
+      "eco_mode_possible": {
+        "name": "Modo eco posible"
+      }
+    },
+    "fan": {
+      "multiair_1": {
+        "name": "MultiAir 1"
+      },
+      "multiair_2": {
+        "name": "MultiAir 2"
+      }
+    },
+    "switch": {
+      "heating_schedule": {
+        "name": "Programación de calefacción"
+      },
+      "frost_protection": {
+        "name": "Protección antihielo"
+      },
+      "eco_mode": {
+        "name": "Modo eco"
+      }
+    },
+    "number": {
+      "heating_power": {
+        "name": "Potencia de calefacción"
+      },
+      "setback_temperature": {
+        "name": "Temperatura reducida"
+      },
+      "frost_protection_temperature": {
+        "name": "Temperatura antihielo"
+      },
+      "bake_target_temperature": {
+        "name": "Temperatura del horno"
+      },
+      "room_temperature_offset": {
+        "name": "Calibración sonda de temperatura"
+      },
+      "multiair_1_area": {
+        "name": "Corrección convección MultiAir 1"
+      },
+      "multiair_2_area": {
+        "name": "Corrección convección MultiAir 2"
+      }
+    },
+    "sensor": {
+      "room_temperature": {
+        "name": "Temperatura ambiente"
+      },
+      "combustion_temperature": {
+        "name": "Temperatura cámara de combustión"
+      },
+      "board_temperature": {
+        "name": "Temperatura placa base"
+      },
+      "pellets_total_kg": {
+        "name": "Pellets consumidos"
+      },
+      "pellet_hours": {
+        "name": "Horas de funcionamiento con pellets"
+      },
+      "log_runtime": {
+        "name": "Horas de funcionamiento con leña"
+      },
+      "service_countdown_kg": {
+        "name": "Cuenta atrás mantenimiento"
+      },
+      "fan_speed_rpm": {
+        "name": "Velocidad del extractor de humos"
+      },
+      "power_actual_percent": {
+        "name": "Potencia de calefacción real"
+      },
+      "auger_speed_rpm": {
+        "name": "Velocidad del tornillo de alimentación"
+      },
+      "stove_state": {
+        "name": "Estado de la estufa",
+        "state": {
+          "off": "Apagado",
+          "standby": "En espera",
+          "ignition": "Encendido",
+          "flame_start": "Inicio de llama",
+          "heating": "Calentando",
+          "cleaning": "Limpieza de la parrilla",
+          "burn_off": "Extinción",
+          "splitlog": "Modo leña",
+          "splitlog_check": "Comprobación leña",
+          "splitlog_refuel": "Recargar leña",
+          "splitlog_no_refuel": "No recargar",
+          "unknown": "Desconocido"
+        }
+      },
+      "wifi_rssi": {
+        "name": "Señal WiFi"
+      },
+      "uptime_seconds": {
+        "name": "Tiempo de funcionamiento"
+      },
+      "air_flaps_percent": {
+        "name": "Aletas de aire"
+      },
+      "air_flaps_target_percent": {
+        "name": "Consigna aletas de aire"
+      },
+      "insertion_motor": {
+        "name": "Motor de inserción"
+      },
+      "insertion_motor_current": {
+        "name": "Corriente del motor de inserción"
+      },
+      "error_code": {
+        "name": "Código de error"
+      },
+      "error_sub": {
+        "name": "Subcódigo de error"
+      },
+      "warning_code": {
+        "name": "Código de advertencia"
+      }
+    },
+    "time": {
+      "schedule_mon_1_start": {
+        "name": "Lunes tramo 1 inicio"
+      },
+      "schedule_mon_1_end": {
+        "name": "Lunes tramo 1 fin"
+      },
+      "schedule_mon_2_start": {
+        "name": "Lunes tramo 2 inicio"
+      },
+      "schedule_mon_2_end": {
+        "name": "Lunes tramo 2 fin"
+      },
+      "schedule_tue_1_start": {
+        "name": "Martes tramo 1 inicio"
+      },
+      "schedule_tue_1_end": {
+        "name": "Martes tramo 1 fin"
+      },
+      "schedule_tue_2_start": {
+        "name": "Martes tramo 2 inicio"
+      },
+      "schedule_tue_2_end": {
+        "name": "Martes tramo 2 fin"
+      },
+      "schedule_wed_1_start": {
+        "name": "Miércoles tramo 1 inicio"
+      },
+      "schedule_wed_1_end": {
+        "name": "Miércoles tramo 1 fin"
+      },
+      "schedule_wed_2_start": {
+        "name": "Miércoles tramo 2 inicio"
+      },
+      "schedule_wed_2_end": {
+        "name": "Miércoles tramo 2 fin"
+      },
+      "schedule_thu_1_start": {
+        "name": "Jueves tramo 1 inicio"
+      },
+      "schedule_thu_1_end": {
+        "name": "Jueves tramo 1 fin"
+      },
+      "schedule_thu_2_start": {
+        "name": "Jueves tramo 2 inicio"
+      },
+      "schedule_thu_2_end": {
+        "name": "Jueves tramo 2 fin"
+      },
+      "schedule_fri_1_start": {
+        "name": "Viernes tramo 1 inicio"
+      },
+      "schedule_fri_1_end": {
+        "name": "Viernes tramo 1 fin"
+      },
+      "schedule_fri_2_start": {
+        "name": "Viernes tramo 2 inicio"
+      },
+      "schedule_fri_2_end": {
+        "name": "Viernes tramo 2 fin"
+      },
+      "schedule_sat_1_start": {
+        "name": "Sábado tramo 1 inicio"
+      },
+      "schedule_sat_1_end": {
+        "name": "Sábado tramo 1 fin"
+      },
+      "schedule_sat_2_start": {
+        "name": "Sábado tramo 2 inicio"
+      },
+      "schedule_sat_2_end": {
+        "name": "Sábado tramo 2 fin"
+      },
+      "schedule_sun_1_start": {
+        "name": "Domingo tramo 1 inicio"
+      },
+      "schedule_sun_1_end": {
+        "name": "Domingo tramo 1 fin"
+      },
+      "schedule_sun_2_start": {
+        "name": "Domingo tramo 2 inicio"
+      },
+      "schedule_sun_2_end": {
+        "name": "Domingo tramo 2 fin"
+      }
+    },
+    "button": {
+      "schedule_copy": {
+        "name": "Copiar el planning hacia la estufa"
+      },
+      "schedule_send": {
+        "name": "Enviar los tramos a la estufa"
+      },
+      "schedule_discard": {
+        "name": "Cancelar los cambios de los tramos"
+      }
+    },
+    "update": {
+      "firmware": {
+        "name": "Firmware"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opciones",
+        "data": {
+          "external_temperature_sensor": "Sonda de temperatura externa",
+          "schedule_entity": "Programación a copiar hacia la estufa",
+          "multiair": "Mi estufa tiene MultiAir",
+          "ota_password": "Contraseña de actualización inalámbrica"
+        },
+        "data_description": {
+          "external_temperature_sensor": "Opcional. Una sonda de temperatura de Home Assistant mostrada como la temperatura actual de la entidad clima, en lugar de la sonda de la estufa (útil sin sonda ambiental RIKA). Solo visualización: la estufa sigue regulando con su propia sonda.",
+          "schedule_entity": "Opcional. Una programación de Home Assistant (Ajustes, Dispositivos y servicios, Entradas, Programación) dibujada en una cuadrícula semanal. El botón «Copiar el planning hacia la estufa» la envía luego a la estufa. Máximo dos tramos por día.",
+          "multiair": "Marcar si su estufa tiene ventiladores MultiAir y no aparecen. Se muestran automáticamente para los modelos que RIKA vende con MultiAir (DOMO, DOMO BACK, PARO, SONO, CONNECT y las versiones MULTIAIR de PRIMO, SUMO y ROCO).",
+          "ota_password": "Opcional. La contraseña que la clave solicita para las actualizaciones inalámbricas, si ha definido una con el instalador. Se utiliza para instalar un firmware desde Home Assistant."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "stove_not_ready": {
+      "message": "La estufa aún no está lista: el módulo acaba de arrancar o no está conectado a la estufa. No se ha enviado nada; inténtalo de nuevo en unos segundos."
+    },
+    "name_refused": {
+      "message": "El módulo no responde con el nombre {host}. Abre su página mediante su dirección IP (http://{ip}) y añade este nombre en la pestaña Módulo, sección Acceso, o reconfigura la integración con la dirección IP."
+    },
+    "command_failed": {
+      "message": "El comando no ha llegado al módulo en la dirección {host}: {error}"
+    },
+    "schedule_end_before_start": {
+      "message": "Franja {slot}: el fin ({end}) es anterior al inicio ({start}). No se ha enviado nada a la estufa."
+    },
+    "schedule_not_chosen": {
+      "message": "No se ha seleccionado ninguna programación. Crea una (Ajustes, Dispositivos y servicios, Entradas, Programación) y selecciónala en las opciones de la integración Open Firenet."
+    },
+    "schedule_not_found": {
+      "message": "No se puede leer la programación {entity}. Comprueba que sigue existiendo y vuelve a seleccionarla en las opciones de la integración."
+    },
+    "schedule_too_many_slots": {
+      "message": "La estufa admite dos franjas al día, y esta programación tiene {count} para {weekday}. No se ha enviado nada a la estufa."
+    },
+    "update_assets_missing": {
+      "message": "Esta versión no tiene ningún archivo de firmware, lista de sumas de comprobación o firma utilizable por Home Assistant. Actualiza utilizando el instalador."
+    },
+    "update_stove_running": {
+      "message": "La estufa no está apagada. El módulo se reinicia durante una actualización: apaga la estufa y vuelve a intentarlo."
+    },
+    "update_password_required": {
+      "message": "El módulo solicita una contraseña para las actualizaciones inalámbricas. Introdúcela en las opciones de la integración y vuelve a intentarlo."
+    },
+    "update_password_wrong": {
+      "message": "El módulo ha rechazado la contraseña de actualización. Comruébala en las opciones de la integración. No se ha modificado nada en el módulo."
+    },
+    "update_auth_unsupported": {
+      "message": "El módulo ha solicitado una contraseña de un modo que esta integración no reconoce. Actualiza utilizando el instalador."
+    },
+    "update_signature_invalid": {
+      "message": "La firma de la lista de firmwares no es válida. El firmware no se ha enviado al módulo."
+    },
+    "update_checksum_mismatch": {
+      "message": "El firmware descargado no coincide con la suma de comprobación firmada. No se ha enviado al módulo."
+    },
+    "update_not_a_firmware": {
+      "message": "El archivo descargado no es una imagen de firmware. No se ha enviado al módulo."
+    },
+    "update_download_failed": {
+      "message": "No se ha podido descargar el firmware: {error}"
+    },
+    "update_slot_too_small": {
+      "message": "El espacio de actualización del módulo es de {slot} bytes y el firmware ocupa {firmware}. Se requiere una instalación inicial por USB con el instalador."
+    },
+    "update_unreachable": {
+      "message": "No se puede resolver la dirección {host}."
+    },
+    "update_no_reply": {
+      "message": "El módulo en la dirección {host} no ha respondido a la solicitud de actualización. Comprueba que esté encendido y accesible."
+    },
+    "update_no_connection": {
+      "message": "El módulo ha aceptado la actualización, pero no ha podido reconectarse a Home Assistant en el puerto TCP {port}. Comprueba el cortafuegos y el enrutamiento de red entre el módulo y Home Assistant."
+    },
+    "update_transfer_failed": {
+      "message": "Se ha interrumpido la transferencia al módulo. Inténtalo de nuevo."
+    },
+    "update_not_confirmed": {
+      "message": "El firmware se ha enviado, pero el módulo no ha devuelto la nueva versión. Consulta su página y vuelve a intentarlo si es necesario."
+    }
+  }
+}
