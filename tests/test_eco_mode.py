@@ -39,6 +39,15 @@ async def test_the_switch_is_unavailable_when_the_eco_mode_is_not_possible(hass,
     assert hass.states.get(possible).state == "off"
 
 
+async def test_the_switch_is_available_to_turn_off_when_eco_mode_is_not_possible(hass, bridge, setup_integration):
+    bridge.state["controls"].update({"eco_mode": True, "eco_mode_possible": False})
+    await _reload(hass, setup_integration)
+    switch = _entity_id(hass, setup_integration, "switch", "switch_eco_mode")
+    assert hass.states.get(switch).state == "on"
+    await hass.services.async_call("switch", "turn_off", {"entity_id": switch}, blocking=True)
+    assert bridge.posts[-1] == {"ecoMode": False}
+
+
 async def test_an_older_bridge_without_the_values_leaves_the_switch_unavailable(hass, bridge, setup_integration):
     switch = _entity_id(hass, setup_integration, "switch", "switch_eco_mode")
     assert hass.states.get(switch).state == "unavailable"

@@ -20,10 +20,11 @@ async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     coordinator: OpenFirenetCoordinator = hass.data[DOMAIN][entry.entry_id]
+    slots_per_day = coordinator.data.get("schedule_slots_per_day", SLOTS_PER_DAY)
     async_add_entities(
         OpenFirenetScheduleTime(coordinator, entry, day, slot, edge)
         for day in range(len(DAYS))
-        for slot in range(SLOTS_PER_DAY)
+        for slot in range(slots_per_day)
         for edge in EDGES
     )
 

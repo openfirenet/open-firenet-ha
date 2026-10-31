@@ -29,7 +29,7 @@ PLATFORMS = [
 
 
 @callback
-def _cleanup_orphaned_entities(hass: HomeAssistant, entry: ConfigEntry, multiair: bool) -> None:
+def _cleanup_orphaned_entities(hass: HomeAssistant, entry: ConfigEntry, multiair: bool, slots_per_day: int = 2) -> None:
     """Remove orphaned entities from older integration versions.
 
     Isolation guarantees:
@@ -57,7 +57,7 @@ def _cleanup_orphaned_entities(hass: HomeAssistant, entry: ConfigEntry, multiair
         *(
             f"{entry.entry_id}_time_schedule_{day}_{slot}_{edge}"
             for day in SCHEDULE_DAYS
-            for slot in (1, 2)
+            for slot in range(1, slots_per_day + 1)
             for edge in ("start", "end")
         ),
     }
@@ -128,7 +128,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Automatically purge orphaned entities from earlier versions
     _cleanup_orphaned_entities(
-        hass, entry, is_multiair_supported(coordinator.data, entry.options.get(CONF_MULTIAIR, False))
+        hass,
+        entry,
+        is_multiair_supported(coordinator.data, entry.options.get(CONF_MULTIAIR, False)),
+        coordinator.data.get("schedule_slots_per_day", 2),
     )
 
     # Ensure device registry reflects current stove model and versions

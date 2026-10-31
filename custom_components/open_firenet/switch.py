@@ -149,9 +149,9 @@ class OpenFirenetEcoModeSwitch(
 
     @property
     def available(self) -> bool:
-        # Not available while the stove does not allow the eco mode (or a bridge that does not tell it yet).
+        # Not available while the stove does not allow the eco mode, unless it is currently on (so it can be turned off).
         controls = self.coordinator.data.get("controls", {})
-        return super().available and bool(controls.get("eco_mode_possible", False))
+        return super().available and (self.is_on or bool(controls.get("eco_mode_possible", False)))
 
     @property
     def is_on(self) -> bool:
