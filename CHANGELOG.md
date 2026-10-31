@@ -7,6 +7,7 @@
 - Spanish translation.
 
 ### Fixes
+- The Air Flaps, Air Flaps Target, Insertion Motor and Insertion Motor Current sensors (and the other optional ones) no longer turn into "no longer provided by the integration" after a restart of the bridge, when the stove has not sent their value yet. A sensor that exists now stays. Disable a sensor your stove does not have: it stays disabled. (open-firenet-ha#65)
 - The eco mode switch can now always be switched off. Before, the switch was greyed out once the stove reported the mode as no longer possible, so a stove stuck in eco mode kept asking for a log. (openfirenet/open-firenet#131)
 
 ## v2.16.0 (2026-10-29)

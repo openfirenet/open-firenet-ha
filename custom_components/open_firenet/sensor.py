@@ -18,6 +18,7 @@ from homeassistant.const import (
     UnitOfTime,
 )
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -241,13 +242,17 @@ async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     coordinator: OpenFirenetCoordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_entities(
-        [
-            OpenFirenetSensor(coordinator, entry, description)
-            for description in SENSOR_TYPES
-            if not description.optional or description.value_fn(coordinator.data) is not None
-        ]
-    )
+    registry = er.async_get(hass)
+
+    def _offered(description: OpenFirenetSensorEntityDescription) -> bool:
+        if not description.optional or description.value_fn(coordinator.data) is not None:
+            return True
+        # An optional sensor that already exists stays: the bridge may just not have read its value yet after a restart,
+        # and a sensor that is dropped for that reason shows as "no longer provided by the integration" (issue #65).
+        unique_id = f"{entry.entry_id}_sensor_{description.key}"
+        return registry.async_get_entity_id("sensor", DOMAIN, unique_id) is not None
+
+    async_add_entities([OpenFirenetSensor(coordinator, entry, description) for description in SENSOR_TYPES if _offered(description)])
 
 
 class OpenFirenetSensor(CoordinatorEntity[OpenFirenetCoordinator], SensorEntity):
