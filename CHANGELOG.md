@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+### Fixes
+- The eco mode switch can now always be switched off. Before, the switch was greyed out once the stove reported the mode as no longer possible, so a stove stuck in eco mode kept asking for a log. (openfirenet/open-firenet#131)
+
 ## v2.16.0 (2026-10-29)
 
 ### New
