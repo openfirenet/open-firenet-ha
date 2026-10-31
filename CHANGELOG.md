@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+### New
+- Spanish translation
+
 ## v2.16.0 (2026-10-29)
 
 ### New
