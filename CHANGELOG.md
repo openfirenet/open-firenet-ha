@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.17.0 (2026-11-02)
 
 ### New
 - Support for stoves with a single heating schedule slot per day (firmware 2.25): only 14 time entities are created instead of 28, and copying a Home Assistant schedule refuses plans with more than one slot per day. (openfirenet/open-firenet#110)
