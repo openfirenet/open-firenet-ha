@@ -15,9 +15,12 @@ Custom Home Assistant integration for RIKA pellet stoves controlled via the [ope
 - **MultiAir Convection Trim**: Number sliders for -30% to +30% fine tuning of convection output.
 - **Weekly Heating Schedule**: Enable or disable the stove's internal weekly heating schedule via a switch, and adjust the setback temperature (10°C–25°C).
 - **Heating Schedule From Home Assistant**: Draw the week as a Home Assistant schedule and copy it to the stove with one button; time entities per slot are available for automations.
+- **Eco Mode**: a switch for the stove's eco mode, offered only when the stove says the mode is possible (it can always be switched off), and a diagnostic sensor *Eco Mode Possible*.
+- **Stoves on firmware 2.25** (e.g. SUMO, early support, needs bridge firmware 4.9 or later): they take one heating time range a day, so the integration creates 14 time entities instead of 28 and refuses to copy a Home Assistant schedule that has more than one range a day.
 - **Hopper Lid Sensor**: Real-time detection when the pellet hopper lid is opened.
 - **Full Sensor Telemetry**: Room temperature, combustion chamber temperature, mainboard temperature, pellet consumption counters, service countdown, draft and auger RPMs, operating state, and WiFi signal strength.
 - **27 RIKA Stove Models**: Automatic model detection and naming in device registry (DOMO, PARO, SUMO, FILO, COMO, etc.).
+- **Five languages**: English, French, German, Italian and Spanish, for the entity names and the stove states.
 
 ---
 
@@ -72,16 +75,17 @@ The MultiAir entities are created for these models only. If your stove has Multi
 |---|---|---|
 | `switch.open_firenet_heating_schedule` | Heating Schedule | Toggle the stove's internal weekly heating schedule on or off |
 | `switch.open_firenet_frost_protection` | Frost Protection | Toggle stove frost protection mode on or off |
+| `switch.open_firenet_eco_mode` | Eco Mode | Eco mode of the stove. Available only when the stove says the mode is possible, or when it is on, so it can always be switched off *(stoves that have an eco mode)* |
 
 ### Heating schedule
 
-The stove has two time slots per day. To set them from Home Assistant:
+The stove has two time slots per day (one on firmware 2.25). To set them from Home Assistant:
 
-1. Create a schedule: Settings > Devices & services > Helpers > Create helper > Schedule. Draw your week on the grid, with at most two time ranges per day.
+1. Create a schedule: Settings > Devices & services > Helpers > Create helper > Schedule. Draw your week on the grid, with at most two time ranges per day (one on a stove with firmware 2.25).
 2. Open the options of the Open Firenet integration (Configure) and choose it under "Schedule to copy to the stove".
 3. On the device page, press **Copy schedule to the stove**. The whole week is sent in one command. Press it again after each change of the schedule.
 
-A day with more than two ranges is refused with a message, and nothing is sent. A range that ends at midnight is sent as ending at 23:59. The switch "Heating Schedule" still decides whether the stove follows its schedule.
+A day with more ranges than the stove takes (two, or one on firmware 2.25) is refused with a message, and nothing is sent. A range that ends at midnight is sent as ending at 23:59. The switch "Heating Schedule" still decides whether the stove follows its schedule.
 
 | Entity | Name | Description |
 |---|---|---|
@@ -91,7 +95,7 @@ For automations, each slot also exists as two time entities. They are **disabled
 
 | Entity | Name | Description |
 |---|---|---|
-| `time.open_firenet_<day>_slot_<1 or 2>_start` / `_end` | e.g. Monday slot 1 start | Start and end of each slot (28 entities). A start equal to its end switches the slot off |
+| `time.open_firenet_<day>_slot_<1 or 2>_start` / `_end` | e.g. Monday slot 1 start | Start and end of each slot (28 entities, 14 on firmware 2.25, which has no second slot). A start equal to its end switches the slot off |
 | `button.open_firenet_send_schedule_to_the_stove` | Send schedule to the stove | Sends the changed slots. Refused, with nothing sent, if a slot ends before it starts |
 | `button.open_firenet_discard_schedule_changes` | Discard schedule changes | Drops the changes that were not sent |
 | `binary_sensor.open_firenet_schedule_changes_pending` | Schedule changes pending | On while changes are waiting to be sent |
@@ -125,6 +129,7 @@ The **Install** button downloads the release, checks its signature and checksum,
 | `binary_sensor.open_firenet_combustion_active` | Combustion Active | — | Stove is actively burning pellets / flame present |
 | `binary_sensor.open_firenet_stove_error` | Stove Error | `problem` | Stove reports an error state |
 | `binary_sensor.open_firenet_pellet_hopper_lid` | Pellet Hopper Lid | `door` | Open (`on`) when pellet hopper lid is raised |
+| `binary_sensor.open_firenet_eco_mode_possible` | Eco Mode Possible | — | `on` when the stove says its eco mode is possible *(Diagnostic; stoves that have an eco mode)* |
 
 ### Sensors
 | Entity ID | Name | Unit | Description |
