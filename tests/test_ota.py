@@ -122,16 +122,15 @@ def test_find_assets_selects_variant():
     assert ota.find_assets(assets) == ("open-firenet-ota.bin", "u2", "u5", "u6")
 
 
-def test_find_assets_psram_missing_raises_error():
+def test_find_assets_psram_fallback_to_standard():
     assets = {
         "open-firenet-factory.bin": "u1",
         "open-firenet-ota.bin": "u2",
         "SHA256SUMS": "u3",
         "SHA256SUMS.minisig": "u4",
     }
-    with pytest.raises(OtaError) as err:
-        ota.find_assets(assets, variant="psram")
-    assert err.value.key == "update_assets_missing"
+    # When no PSRAM binary exists in the release, falls back to standard
+    assert ota.find_assets(assets, variant="psram") == ("open-firenet-ota.bin", "u2", "u3", "u4")
 
 
 class FakeEsp:

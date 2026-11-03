@@ -141,6 +141,8 @@ class OpenFirenetFirmwareUpdate(CoordinatorEntity[OpenFirenetCoordinator], Updat
             raise HomeAssistantError(translation_domain=DOMAIN, translation_key="update_password_required")
 
         variant = str(device.get("firmware_variant") or "standard").strip().lower()
+        if variant != "psram" and device.get("hardware_psram") is True:
+            variant = "psram"
         self._attr_in_progress = True
         self._attr_update_percentage = None
         self.async_write_ha_state()

@@ -97,6 +97,15 @@ def find_assets(assets: dict[str, str], variant: str = "standard") -> tuple[str,
                 (n for n in assets if "psram" in n and n.endswith(".bin") and "factory" not in n and "bootloader" not in n),
                 None,
             )
+        # Fallback to standard if no PSRAM binary exists in this release (e.g. older release)
+        if firmware is None:
+            _LOGGER.warning("No PSRAM firmware asset in release, falling back to standard binary")
+            firmware = next((n for n in assets if "ota" in n and "psram" not in n and n.endswith(".bin")), None)
+            if firmware is None:
+                firmware = next(
+                    (n for n in assets if n.endswith(".bin") and "psram" not in n and "factory" not in n and "bootloader" not in n),
+                    None,
+                )
     else:
         firmware = next((n for n in assets if "ota" in n and "psram" not in n and n.endswith(".bin")), None)
         if firmware is None:
