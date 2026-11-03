@@ -74,12 +74,14 @@ def ota(monkeypatch):
         sent: list[dict] = []
         download_error = None
         bridge = None
+        variant = None
 
     fake = Fake()
     fake.sent = []
 
-    async def download(session, assets):
+    async def download(session, assets, variant="standard"):
         fake.downloads += 1
+        fake.variant = variant
         if fake.download_error:
             raise fake.download_error
         return FIRMWARE
@@ -121,9 +123,21 @@ async def test_install_downloads_checks_and_sends(hass, bridge, ota):
     await _install(hass, entry)
 
     assert ota.downloads == 1
+    assert ota.variant == "standard"
     assert [s["size"] for s in ota.sent] == [len(FIRMWARE)]
     assert ota.sent[0]["password"] is None
     assert hass.states.get(_entity_id(hass, entry)).state == "off"
+
+
+async def test_install_selects_psram_variant_when_bridge_reports_psram(hass, bridge, ota):
+    ota.bridge = bridge
+    bridge.state["device"]["firmware_variant"] = "psram"
+    entry = await _setup_with(hass, bridge)
+
+    await _install(hass, entry)
+
+    assert ota.downloads == 1
+    assert ota.variant == "psram"
 
 
 async def test_install_uses_the_password_of_the_options(hass, bridge, ota):

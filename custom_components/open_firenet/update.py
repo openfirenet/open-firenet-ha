@@ -140,11 +140,14 @@ class OpenFirenetFirmwareUpdate(CoordinatorEntity[OpenFirenetCoordinator], Updat
         if device.get("ota_password_set") and not password:
             raise HomeAssistantError(translation_domain=DOMAIN, translation_key="update_password_required")
 
+        variant = str(device.get("firmware_variant") or "standard").strip().lower()
         self._attr_in_progress = True
         self._attr_update_percentage = None
         self.async_write_ha_state()
         try:
-            firmware = await download_verified_firmware(async_get_clientsession(self.hass), release["assets"])
+            firmware = await download_verified_firmware(
+                async_get_clientsession(self.hass), release["assets"], variant=variant
+            )
             slot = device.get("ota_slot_bytes") or 0
             if slot and len(firmware) > slot:
                 raise OtaError("update_slot_too_small", firmware=str(len(firmware)), slot=str(slot))

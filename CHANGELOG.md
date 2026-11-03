@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+### New
+- When installing a bridge update, the integration selects the firmware asset matching the bridge variant (standard or boards with PSRAM).
+
 ## v2.18.0 (2026-11-05)
 
 ### New
