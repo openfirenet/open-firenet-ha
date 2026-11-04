@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import logging
+import re
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST, CONF_SCAN_INTERVAL, Platform
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 
 from .binary_sensor import BINARY_SENSOR_TYPES, SCHEDULE_PENDING
 from .const import CONF_MULTIAIR, DEFAULT_SCAN_INTERVAL, DOMAIN, get_model_name, is_multiair_supported
@@ -118,6 +120,32 @@ def _cleanup_orphaned_entities(hass: HomeAssistant, entry: ConfigEntry, multiair
                 _LOGGER.info("Updated generic entity ID %s -> %s", current_id, target_id)
 
 
+_NON_HEX = re.compile(r"[^0-9A-Fa-f]")
+
+
+def _bridge_mac(data: dict) -> str | None:
+    """The bridge's MAC address, as a Home Assistant device connection.
+
+    Device connections are what Home Assistant shows in the device information, and what integrations use to
+    recognise the same hardware (a router, a DHCP or network scanner integration on versions that match devices
+    across config entries).
+
+    Bridge firmware 4.x reports it as `device.mac`; older payloads may carry `status.mac` instead. A missing,
+    malformed or all-zero value is ignored: it would create a connection that links unrelated devices.
+    """
+    device = data.get("device")
+    mac = device.get("mac") if isinstance(device, dict) else None
+    if not mac:
+        status = data.get("status")
+        mac = status.get("mac") if isinstance(status, dict) else None
+    if not isinstance(mac, str):
+        return None
+    compact = _NON_HEX.sub("", mac)
+    if len(compact) != 12 or compact in {"0" * 12, "f" * 12}:
+        return None
+    return ":".join(compact[i : i + 2] for i in range(0, 12, 2)).lower()
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = OpenFirenetCoordinator(
         hass,
@@ -139,9 +167,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     device = coordinator.data.get("device", {})
     stove = coordinator.data.get("stove", {})
     model_name = stove.get("model_name") or get_model_name(stove.get("model"))
+    mac = _bridge_mac(coordinator.data)
     device_reg.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, entry.entry_id)},
+        connections={(CONNECTION_NETWORK_MAC, mac)} if mac else set(),
         name=device.get("name", "Open Firenet"),
         manufacturer="Open Firenet",
         model=f"RIKA {model_name}",

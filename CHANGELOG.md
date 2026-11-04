@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+### New
+- The bridge's **MAC address** is recorded in its device information, next to its identifiers, as other integrations do for their devices.
+
 ## v2.17.0 (2026-11-02)
 
 ### New
