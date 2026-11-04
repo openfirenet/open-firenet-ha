@@ -19,7 +19,12 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry
 from custom_components.open_firenet.const import DOMAIN
 
 INITIAL_STATE = {
-    "device": {"name": "Open Firenet", "version": "2.1.0", "connected": True},
+    "device": {
+        "name": "Open Firenet",
+        "version": "2.1.0",
+        "mac": "AA:BB:CC:12:34:56",
+        "connected": True,
+    },
     "stove": {
         "state": "off",
         "state_code": 0,
