@@ -107,6 +107,32 @@ def test_find_assets_needs_firmware_sums_and_signature():
         ota.find_assets(assets)
 
 
+def test_find_assets_selects_variant():
+    assets = {
+        "open-firenet-factory.bin": "u1",
+        "open-firenet-ota.bin": "u2",
+        "open-firenet-factory-psram.bin": "u3",
+        "open-firenet-ota-psram.bin": "u4",
+        "SHA256SUMS": "u5",
+        "SHA256SUMS.minisig": "u6",
+    }
+    assert ota.find_assets(assets, variant="standard") == ("open-firenet-ota.bin", "u2", "u5", "u6")
+    assert ota.find_assets(assets, variant="psram") == ("open-firenet-ota-psram.bin", "u4", "u5", "u6")
+    # Default is standard
+    assert ota.find_assets(assets) == ("open-firenet-ota.bin", "u2", "u5", "u6")
+
+
+def test_find_assets_psram_fallback_to_standard():
+    assets = {
+        "open-firenet-factory.bin": "u1",
+        "open-firenet-ota.bin": "u2",
+        "SHA256SUMS": "u3",
+        "SHA256SUMS.minisig": "u4",
+    }
+    # When no PSRAM binary exists in the release, falls back to standard
+    assert ota.find_assets(assets, variant="psram") == ("open-firenet-ota.bin", "u2", "u3", "u4")
+
+
 class FakeEsp:
     """The update service of the bridge: UDP invitation (with an optional password), then a TCP connection back."""
 

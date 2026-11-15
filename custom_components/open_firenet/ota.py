@@ -88,11 +88,31 @@ def checksum_of(sums: str, name: str) -> str | None:
     return None
 
 
-def find_assets(assets: dict[str, str]) -> tuple[str, str, str, str]:
+def find_assets(assets: dict[str, str], variant: str = "standard") -> tuple[str, str, str, str]:
     """(firmware name, firmware url, sums url, signature url) of a release, or OtaError."""
-    firmware = next((n for n in assets if "ota" in n and n.endswith(".bin")), None)
-    if firmware is None:
-        firmware = next((n for n in assets if n.endswith(".bin") and "factory" not in n), None)
+    if variant == "psram":
+        firmware = next((n for n in assets if "ota-psram" in n and n.endswith(".bin")), None)
+        if firmware is None:
+            firmware = next(
+                (n for n in assets if "psram" in n and n.endswith(".bin") and "factory" not in n and "bootloader" not in n),
+                None,
+            )
+        # Fallback to standard if no PSRAM binary exists in this release (e.g. older release)
+        if firmware is None:
+            _LOGGER.warning("No PSRAM firmware asset in release, falling back to standard binary")
+            firmware = next((n for n in assets if "ota" in n and "psram" not in n and n.endswith(".bin")), None)
+            if firmware is None:
+                firmware = next(
+                    (n for n in assets if n.endswith(".bin") and "psram" not in n and "factory" not in n and "bootloader" not in n),
+                    None,
+                )
+    else:
+        firmware = next((n for n in assets if "ota" in n and "psram" not in n and n.endswith(".bin")), None)
+        if firmware is None:
+            firmware = next(
+                (n for n in assets if n.endswith(".bin") and "psram" not in n and "factory" not in n and "bootloader" not in n),
+                None,
+            )
     sums = next((n for n in assets if n == "SHA256SUMS"), None)
     signature = next((n for n in assets if n.endswith(".minisig")), None)
     if not (firmware and sums and signature):
@@ -118,9 +138,11 @@ async def _download(session: aiohttp.ClientSession, url: str, limit: int) -> byt
     return bytes(data)
 
 
-async def download_verified_firmware(session: aiohttp.ClientSession, assets: dict[str, str]) -> bytes:
+async def download_verified_firmware(
+    session: aiohttp.ClientSession, assets: dict[str, str], variant: str = "standard"
+) -> bytes:
     """Download the firmware of a release and check its signature list and its SHA-256."""
-    name, firmware_url, sums_url, signature_url = find_assets(assets)
+    name, firmware_url, sums_url, signature_url = find_assets(assets, variant=variant)
     sums = await _download(session, sums_url, 64 * 1024)
     signature = await _download(session, signature_url, 64 * 1024)
     verify_minisign(sums, signature.decode("utf-8", "replace"))
