@@ -86,6 +86,9 @@ STOVE_MODELS: dict[int, str] = {
 }
 
 MULTIAIR_MODELS: set[int] = {4, 13, 17, 22, 23, 25, 26, 29}
+# ANIMO numbers its models on its own (4 is the ADEVO, not the ROCO MULTIAIR) and sells MultiAir as an option of the
+# AVITO (1), PURE (5) and ADUO (6).
+ANIMO_MULTIAIR_MODELS: set[int] = {1, 5, 6}
 
 
 def get_model_name(model_id: int | None, fallback: str | None = None) -> str:
@@ -100,14 +103,17 @@ def get_model_name(model_id: int | None, fallback: str | None = None) -> str:
 def is_multiair_supported(data: dict, declared: bool = False) -> bool:
     """Whether the MultiAir fans and their settings are offered for this stove.
 
-    They are for the models RIKA sells with MultiAir, and for any stove whose owner ticked the option ("declared").
+    They are for the models RIKA or ANIMO (the stove's brand) sells with MultiAir, and for any stove whose owner ticked
+    the option ("declared").
     The bridge reports the fan values for every stove, equipped or not, so their presence tells nothing (issue #33).
     """
     if declared:
         return True
     if not isinstance(data, dict):
         return False
-    return (data.get("stove") or {}).get("model") in MULTIAIR_MODELS
+    stove = data.get("stove") or {}
+    models = ANIMO_MULTIAIR_MODELS if stove.get("brand") == "ANIMO" else MULTIAIR_MODELS
+    return stove.get("model") in models
 
 
 def is_bake_supported(data: dict) -> bool:
