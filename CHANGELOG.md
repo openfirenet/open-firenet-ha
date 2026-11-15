@@ -3,7 +3,7 @@
 ## Non publié
 
 ### New
-- When installing a bridge update, the integration selects the firmware asset matching the bridge variant (standard or boards with PSRAM), automatically migrating boards with physical PSRAM to the PSRAM build and falling back gracefully to the standard build if no PSRAM binary is available in an older release.
+- When installing a bridge update, the integration selects the firmware asset matching the bridge variant (standard or boards with PSRAM), automatically migrating boards with octal PSRAM (8 or 16 MB) to the PSRAM build; boards with quad PSRAM (2 MB) are not supported by that build and keep the standard one and falling back gracefully to the standard build if no PSRAM binary is available in an older release.
 
 ## v2.18.0 (2026-11-05)
 
