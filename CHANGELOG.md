@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+### Fixes
+- MultiAir on ANIMO stoves: the MultiAir fans and settings are created for the ANIMO AVITO, PURE and ADUO, which ANIMO sells with MultiAir as an option, and no longer for the other ANIMO models whose number matched a RIKA MultiAir model (the ADEVO was taken for a ROCO MULTIAIR). The MultiAir option of the integration still works for any other stove. By @openfirenet.
+
 ## v2.19.0 (2026-11-15)
 
 ### New

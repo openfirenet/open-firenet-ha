@@ -5,6 +5,7 @@ from __future__ import annotations
 import pytest
 
 from custom_components.open_firenet.const import (
+    ANIMO_MULTIAIR_MODELS,
     MULTIAIR_MODELS,
     STOVE_MODELS,
     get_model_name,
@@ -28,3 +29,16 @@ def test_natural_convection_model_is_not_multiair():
 
 def test_primo_is_multiair():
     assert 29 in MULTIAIR_MODELS
+
+
+@pytest.mark.parametrize("model_id", sorted(ANIMO_MULTIAIR_MODELS))
+def test_animo_multiair_models_are_supported(model_id):
+    assert is_multiair_supported({"stove": {"model": model_id, "brand": "ANIMO"}, "controls": {}})
+
+
+def test_animo_adevo_is_not_taken_for_a_roco_multiair():
+    assert not is_multiair_supported({"stove": {"model": 4, "brand": "ANIMO"}, "controls": {}})
+
+
+def test_animo_owner_can_still_declare_multiair():
+    assert is_multiair_supported({"stove": {"model": 4, "brand": "ANIMO"}, "controls": {}}, declared=True)
