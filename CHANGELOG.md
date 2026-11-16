@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## v2.20.0 (2026-11-16)
 
 ### New
 - A **Power** switch turns the stove on or off, as the thermostat does, so that custom cards and automations can use it directly. By @openfirenet, suggested by @LarrxX. (#81)
