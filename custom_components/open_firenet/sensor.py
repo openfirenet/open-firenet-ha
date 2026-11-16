@@ -85,6 +85,18 @@ SENSOR_TYPES: tuple[OpenFirenetSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=room_temperature,
     ),
+    # The target of the comfort mode, as the thermostat shows it; a sensor so that it can be graphed (issue #81).
+    OpenFirenetSensorEntityDescription(
+        key="target_temperature",
+        name="Target Temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda data: (
+            float(data["controls"]["target_temperature"])
+            if data.get("controls", {}).get("target_temperature") is not None else None
+        ),
+    ),
     OpenFirenetSensorEntityDescription(
         key="combustion_temperature",
         name="Combustion Chamber Temperature",

@@ -1,5 +1,11 @@
 # Changelog
 
+## Non publié
+
+### New
+- A **Power** switch turns the stove on or off, as the thermostat does, so that custom cards and automations can use it directly. By @openfirenet, suggested by @LarrxX. (#81)
+- A **Target Temperature** sensor gives the target room temperature of the comfort mode, so that it can be graphed with the room temperature. By @openfirenet, suggested by @LarrxX. (#81)
+
 ## v2.19.1 (2026-11-15)
 
 ### Fixes

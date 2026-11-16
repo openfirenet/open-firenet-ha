@@ -19,10 +19,51 @@ async def async_setup_entry(
 ) -> None:
     coordinator: OpenFirenetCoordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities([
+        OpenFirenetPowerSwitch(coordinator, entry),
         OpenFirenetScheduleSwitch(coordinator, entry),
         OpenFirenetFrostProtectionSwitch(coordinator, entry),
         OpenFirenetEcoModeSwitch(coordinator, entry),
     ])
+
+
+class OpenFirenetPowerSwitch(
+    CoordinatorEntity[OpenFirenetCoordinator], SwitchEntity
+):
+    """Switches the stove on or off, as the thermostat does; an entity of its own for cards and automations (issue #81)."""
+
+    _attr_has_entity_name = True
+    _attr_name = "Power"
+    _attr_translation_key = "power"
+    _attr_icon = "mdi:power"
+
+    def __init__(self, coordinator: OpenFirenetCoordinator, entry: ConfigEntry) -> None:
+        super().__init__(coordinator)
+        self._entry = entry
+        self._attr_unique_id = f"{entry.entry_id}_switch_power"
+
+    @property
+    def device_info(self) -> dict:
+        device = self.coordinator.data.get("device", {})
+        stove = self.coordinator.data.get("stove", {})
+        model_name = stove.get("model_name") or get_model_name(stove.get("model"))
+        return {
+            "identifiers": {(DOMAIN, self._entry.entry_id)},
+            "name": device.get("name", "Open Firenet"),
+            "manufacturer": "Open Firenet",
+            "model": f"RIKA {model_name}",
+            "sw_version": f"Firmware v{device.get('version', '2.0.0')} (MB {stove.get('mainboard_version') or '?'})",
+            "configuration_url": f"http://{self.coordinator.host}",
+        }
+
+    @property
+    def is_on(self) -> bool:
+        return bool(self.coordinator.data.get("controls", {}).get("on"))
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        await self.coordinator.async_set_controls(on=True)
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        await self.coordinator.async_set_controls(on=False)
 
 
 class OpenFirenetScheduleSwitch(

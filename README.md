@@ -73,6 +73,7 @@ The MultiAir entities are created for these models only. If your stove has Multi
 ### Switch
 | Entity ID | Name | Description |
 |---|---|---|
+| `switch.open_firenet_power` | Power | Switch the stove on or off, as the thermostat does; handy in custom cards and automations |
 | `switch.open_firenet_heating_schedule` | Heating Schedule | Toggle the stove's internal weekly heating schedule on or off |
 | `switch.open_firenet_frost_protection` | Frost Protection | Toggle stove frost protection mode on or off |
 | `switch.open_firenet_eco_mode` | Eco Mode | Eco mode of the stove. Available only when the stove says the mode is possible, or when it is on, so it can always be switched off *(stoves that have an eco mode)* |
@@ -135,6 +136,7 @@ The **Install** button downloads the release, checks its signature and checksum,
 | Entity ID | Name | Unit | Description |
 |---|---|---|---|
 | `sensor.open_firenet_room_temperature` | Room Temperature | °C | Current ambient room temperature |
+| `sensor.open_firenet_target_temperature` | Target Temperature | °C | Target room temperature of the comfort mode, as the thermostat shows it; can be graphed |
 | `sensor.open_firenet_combustion_chamber_temperature` | Combustion Chamber Temperature | °C | Flame / combustion chamber temperature |
 | `sensor.open_firenet_board_temperature` | Mainboard Temperature | °C | Stove motherboard temperature |
 | `sensor.open_firenet_pellets_consumed` | Pellets Consumed | kg | Total cumulative pellets burned |

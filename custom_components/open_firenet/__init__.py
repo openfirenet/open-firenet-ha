@@ -41,6 +41,7 @@ def _cleanup_orphaned_entities(hass: HomeAssistant, entry: ConfigEntry, multiair
     """
     valid_unique_ids = {
         f"{entry.entry_id}_climate",
+        f"{entry.entry_id}_switch_power",
         f"{entry.entry_id}_switch_heating_schedule",
         f"{entry.entry_id}_switch_frost_protection",
         f"{entry.entry_id}_switch_eco_mode",
