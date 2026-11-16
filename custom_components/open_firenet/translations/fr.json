@@ -97,6 +97,9 @@
       }
     },
     "switch": {
+      "power": {
+        "name": "Marche"
+      },
       "heating_schedule": {
         "name": "Programmation de chauffe"
       },
@@ -133,6 +136,9 @@
     "sensor": {
       "room_temperature": {
         "name": "Température ambiante"
+      },
+      "target_temperature": {
+        "name": "Température de consigne"
       },
       "combustion_temperature": {
         "name": "Température chambre de combustion"

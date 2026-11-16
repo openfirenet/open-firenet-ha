@@ -97,6 +97,9 @@
       }
     },
     "switch": {
+      "power": {
+        "name": "Accensione"
+      },
       "heating_schedule": {
         "name": "Programmazione del riscaldamento"
       },
@@ -133,6 +136,9 @@
     "sensor": {
       "room_temperature": {
         "name": "Temperatura ambiente"
+      },
+      "target_temperature": {
+        "name": "Temperatura impostata"
       },
       "combustion_temperature": {
         "name": "Temperatura della camera di combustione"
