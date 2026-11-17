@@ -6,7 +6,7 @@
 # 1. Clean working tree, on main, in sync with origin
 # 2. Unit tests, when the test environment is installed (CI runs them in any case)
 # 3. Automatic SemVer (patch / minor / major) from the commits since the last tag
-# 4. "version" of manifest.json set to the new version, and the "## Non publié"
+# 4. "version" of manifest.json set to the new version, and the "## Unreleased"
 #    section of CHANGELOG.md renamed "## vX.Y.Z (date)"
 # 5. Commit, annotated tag, push: the Release workflow then creates the GitHub
 #    release as a draft, with the notes of that CHANGELOG section
@@ -31,7 +31,7 @@ err()   { echo -e "${RED}✖${NC} $*" >&2; }
 fatal() { err "$*"; exit 1; }
 
 MANIFEST="custom_components/open_firenet/manifest.json"
-UNRELEASED="## Non publié"
+UNRELEASED="## Unreleased"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
@@ -87,7 +87,7 @@ else
   warn "Environnement de test absent (pip install -r requirements_test.txt) : tests non lancés ici, la CI les exécute."
 fi
 
-# 5. Something to release: the CHANGELOG must have entries under "Non publié"
+# 5. Something to release: the CHANGELOG must have entries under "Unreleased"
 [[ -f CHANGELOG.md ]] || fatal "CHANGELOG.md introuvable."
 grep -q "^${UNRELEASED}\$" CHANGELOG.md || fatal "CHANGELOG.md n'a pas de section \"${UNRELEASED}\" : rien à publier."
 NOTES="$(awk -v h="$UNRELEASED" '$0==h{f=1;next} /^## /{f=0} f' CHANGELOG.md | sed '/^[[:space:]]*$/d')"
@@ -194,9 +194,9 @@ fi
 python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$MANIFEST" || fatal "${MANIFEST} n'est plus un JSON valide !"
 ok "manifest.json synchronisé (${CLEAN_VER})."
 
-# The "Non publié" section becomes the one of the release; the next feat/fix entry creates it again.
+# The "Unreleased" section becomes the one of the release; the next feat/fix entry creates it again.
 sed -i "s/^${UNRELEASED}\$/## ${NEW_TAG} ($(date +%F))/" CHANGELOG.md
-ok "CHANGELOG.md : section \"Non publié\" renommée en ${NEW_TAG}."
+ok "CHANGELOG.md : section \"Unreleased\" renommée en ${NEW_TAG}."
 
 # 12. Commit and push
 info "Commit automatique de la version ${NEW_TAG}..."

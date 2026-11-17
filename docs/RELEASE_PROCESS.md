@@ -12,11 +12,11 @@ The script:
 1. checks that the working tree is clean, on `main` and in sync with GitHub;
 2. runs the tests when the test environment is installed (`pip install -r requirements_test.txt`); the Tests
    workflow runs them on GitHub in any case;
-3. refuses to go on if the `## Non publié` section of `CHANGELOG.md` is empty;
+3. refuses to go on if the `## Unreleased` section of `CHANGELOG.md` is empty;
 4. proposes the next version (patch, or minor when a `feat` commit or branch was merged, or major on a breaking
    change) and asks for confirmation;
 5. sets `version` in `custom_components/open_firenet/manifest.json` (the version Home Assistant shows) and renames
-   the `## Non publié` section to `## vX.Y.Z (date)`;
+   the `## Unreleased` section to `## vX.Y.Z (date)`;
 6. commits, pushes, then creates and pushes the tag.
 
 The pushed tag starts the Release workflow, which checks that `manifest.json` carries the version of the tag and
@@ -27,7 +27,7 @@ only sees published releases.
 
 ## Day to day
 
-Every `feat` or `fix` adds a line under `## Non publié` in `CHANGELOG.md`, in English, written for users. The section
+Every `feat` or `fix` adds a line under `## Unreleased` in `CHANGELOG.md`, in English, written for users. The section
 is created again by the first entry after a release.
 
 Do not create a release or a tag from the GitHub page: `manifest.json` and the changelog would be left behind (this is
